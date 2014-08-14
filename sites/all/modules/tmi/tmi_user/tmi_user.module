@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * Implements hook_user_user_insert().
+ */
+function tmi_user_user_insert(&$edit, $account, $category) {
+  // Create an Application for the active Scholarship for this user.
+  $application = entity_create('application', array(
+    'uid' => $account->uid,
+    'nid_scholarship' => TMI_ACTIVE_SCHOLARSHIP_NID,
+  ));
+  $application->save();
+}

@@ -29,6 +29,9 @@ class ApplicationEntityController extends EntityAPIController {
    * Populates created and updated automatically.
    */
   public function save($entity, DatabaseTransaction $transaction = NULL) {
+    if (isset($entity->is_new)) {
+      $entity->created = REQUEST_TIME;
+    }
     parent::save($entity, $transaction);
   }
 }
