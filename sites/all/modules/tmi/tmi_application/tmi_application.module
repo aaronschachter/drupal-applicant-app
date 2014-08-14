@@ -1,0 +1,25 @@
+<?php
+/**
+ * @file
+ * Code for the tmi_scholarship_application module.
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function tmi_application_entity_info() {
+  $info = array();
+  $info['application'] = array(
+    'label' => t('Application'),
+    'base table' => 'tmi_application',
+    'entity keys' => array(
+      'id' => 'aid',
+      'label' => 'aid',
+    ),
+    'entity class' => 'ApplicationEntity',
+    'uri callback' => 'entity_class_uri',
+    'controller class' => 'ApplicationEntityController',
+    'module' => 'tmi_application',
+  );
+  return $info;
+}

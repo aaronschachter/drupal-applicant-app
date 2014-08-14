@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Installation and schema hooks for tmi_recommendation.module.
+ * Installation and schema hooks for tmi_application.module.
  */
 
 /**
  * Implements hook_schema().
  */
-function tmi_scholarship_application_schema() {
+function tmi_application_schema() {
   $schema = array();
-  $schema['tmi_scholarship_application'] = array(
+  $schema['tmi_application'] = array(
     'description' => 'Table of Scholarship Applications.',
     'fields' => array(
       'aid' => array(
@@ -31,7 +31,7 @@ function tmi_scholarship_application_schema() {
         'default' => 0,
       ),
       'sid_webform' => array(
-        'description' => 'The Webform submission of the Application.',
+        'description' => 'The Application webform submission.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,

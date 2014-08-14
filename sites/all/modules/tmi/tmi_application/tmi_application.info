@@ -1,0 +1,5 @@
+name = TMI Application
+description = Provides Application entity and functionality.
+package = TMI
+core = 7.x
+files[] = includes/application.inc

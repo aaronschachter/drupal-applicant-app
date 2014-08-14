@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Provides classes for the Scholarship Application Entity.
+ * Provides classes for the Application Entity.
  */
 
 /**
- * Our Scholarship Application entity class.
+ * Our Application entity class.
  */
-class ScholarshipApplicationEntity extends Entity {
+class ApplicationEntity extends Entity {
 
   /**
    * Override this in order to implement a custom default URI.
@@ -21,7 +21,7 @@ class ScholarshipApplicationEntity extends Entity {
 /**
  * Our custom controller for the Scholarship Application Entity type.
  */
-class ScholarshipApplicationEntityController extends EntityAPIController {
+class ApplicationEntityController extends EntityAPIController {
 
   /**
    * Overrides save() method.
