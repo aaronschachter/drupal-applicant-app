@@ -44,7 +44,7 @@ function tmi_recommendation_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      'email' => array(
+      'last_name' => array(
         'description' => 'The Recommender last name.',
         'type' => 'varchar',
         'length' => 255,

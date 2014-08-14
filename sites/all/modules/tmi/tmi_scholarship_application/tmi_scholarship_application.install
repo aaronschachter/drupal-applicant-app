@@ -30,6 +30,12 @@ function tmi_scholarship_application_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
+      'sid_webform' => array(
+        'description' => 'The Webform submission of the Application.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
       'created' => array(
         'description' => 'The Unix timestamp when the Application was created.',
         'type' => 'int',
@@ -42,12 +48,6 @@ function tmi_scholarship_application_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'sid_webform' => array(
-        'description' => 'The Webform submission of the Application.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
       'completed' => array(
         'description' => 'The Unix timestamp when the Application was completed.',
         'type' => 'int',
@@ -55,7 +55,7 @@ function tmi_scholarship_application_schema() {
         'default' => 0,
       ),
       'reviewed' => array(
-        'description' => 'The Unix timestamp when the Application was reviewed.'
+        'description' => 'The Unix timestamp when the Application was reviewed.',
         'type' => 'int',
       ),
       'review_score' => array(
@@ -70,7 +70,6 @@ function tmi_scholarship_application_schema() {
     'primary key' => array('aid'),
     'indexes' => array(
       'uid' => array('uid'),
-      'status' => array('status'),
     ),
   );
   return $schema;

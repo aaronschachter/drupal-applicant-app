@@ -1,0 +1,25 @@
+<?php
+/**
+ * @file
+ * Code for the tmi_recommendation module.
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function tmi_recommendation_entity_info() {
+  $info = array();
+  $info['recommendation'] = array(
+    'label' => t('Recommendation'),
+    'base table' => 'tmi_recommendation',
+    'entity keys' => array(
+      'id' => 'rid',
+      'label' => 'email',
+    ),
+    'entity class' => 'RecommendationEntity',
+    'uri callback' => 'entity_class_uri',
+    'controller class' => 'RecommendationEntityController',
+    'module' => 'tmi_recommendation',
+  );
+  return $info;
+}
