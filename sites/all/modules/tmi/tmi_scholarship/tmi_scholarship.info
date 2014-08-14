@@ -1,0 +1,17 @@
+name = tmi_scholarship
+core = 7.x
+package = Features
+dependencies[] = date
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = node
+features[features_api][] = api:2
+features[field_base][] = field_date_application
+features[field_base][] = field_webform_applicant
+features[field_base][] = field_webform_recommend
+features[field_base][] = field_webform_recommend_required
+features[field_instance][] = node-scholarship-field_date_application
+features[field_instance][] = node-scholarship-field_webform_applicant
+features[field_instance][] = node-scholarship-field_webform_recommend
+features[field_instance][] = node-scholarship-field_webform_recommend_required
+features[node][] = scholarship

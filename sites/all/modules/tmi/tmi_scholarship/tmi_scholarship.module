@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the tmi_scholarship feature.
+ */
+
+include_once 'tmi_scholarship.features.inc';
