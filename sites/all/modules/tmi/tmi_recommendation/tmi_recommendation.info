@@ -1,0 +1,4 @@
+name = TMI Recommendation
+description = Provides Recommendation entity and functionality.
+package = TMI
+core = 7.x

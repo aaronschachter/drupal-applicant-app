@@ -1,0 +1,4 @@
+name = TMI User
+description = User related functionality.
+package = TMI
+core = 7.x

@@ -1,0 +1,4 @@
+name = TMI Scholarship Application
+description = Provides Scholarship Application entity and functionality.
+package = TMI
+core = 7.x

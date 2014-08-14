@@ -1,0 +1,77 @@
+<?php
+/**
+ * @file
+ * Installation and schema hooks for tmi_recommendation.module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function tmi_scholarship_application_schema() {
+  $schema = array();
+  $schema['tmi_scholarship_application'] = array(
+    'description' => 'Table of Scholarship Applications.',
+    'fields' => array(
+      'aid' => array(
+        'description' => 'Primary key.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The Applicant User uid.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'nid_scholarship' => array(
+        'description' => 'The Scholarship Node nid.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the Application was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'submitted' => array(
+        'description' => 'The Unix timestamp when the Application was submitted.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'sid_webform' => array(
+        'description' => 'The Webform submission of the Application.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'completed' => array(
+        'description' => 'The Unix timestamp when the Application was completed.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'reviewed' => array(
+        'description' => 'The Unix timestamp when the Application was reviewed.'
+        'type' => 'int',
+      ),
+      'review_score' => array(
+        'description' => 'The Application Review score.',
+        'type' => 'int',
+      ),
+      'review_uid' => array(
+        'description' => 'The Application Reviewer User uid.',
+        'type' => 'int',
+      ),
+    ),
+    'primary key' => array('aid'),
+    'indexes' => array(
+      'uid' => array('uid'),
+      'status' => array('status'),
+    ),
+  );
+  return $schema;
+}

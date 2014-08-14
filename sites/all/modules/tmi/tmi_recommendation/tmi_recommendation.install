@@ -1,0 +1,79 @@
+<?php
+/**
+ * @file
+ * Installation and schema hooks for tmi_recommendation.module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function tmi_recommendation_schema() {
+  $schema = array();
+  $schema['tmi_recommendation'] = array(
+    'description' => 'Table of Recommendations.',
+    'fields' => array(
+      'rid' => array(
+        'description' => 'Primary key.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'aid' => array(
+        'description' => 'The Scholarship Application associated with the Recommendation.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'required' => array(
+        'description' => 'Whether or not this is a required Recommendation.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'email' => array(
+        'description' => 'The Recommender email to send the Recommendation to.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'first_name' => array(
+        'description' => 'The Recommender first name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'email' => array(
+        'description' => 'The Recommender last name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the Recommendation was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'submitted' => array(
+        'description' => 'The Unix timestamp when the Recommendation was submitted.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'sid_webform' => array(
+        'description' => 'The Webform submission of the Recommendation.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('rid'),
+    'indexes' => array(
+      'aid' => array('aid'),
+    ),
+  );
+  return $schema;
+}
