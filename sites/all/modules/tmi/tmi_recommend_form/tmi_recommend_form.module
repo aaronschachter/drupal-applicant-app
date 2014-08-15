@@ -5,3 +5,44 @@
  */
 
 include_once 'tmi_recommend_form.features.inc';
+
+// hardcode for now.
+define('TMI_RECOMMEND_FORM_NID', 4);
+
+/**
+ * Implements hook_node_view().
+ */
+function tmi_recommend_form_node_view($node, $view_mode, $langcode) {
+  if ($node->type != 'recommend_form') {
+    return;
+  }
+
+  // Make sure an Recommendation rid has been passed into the URL.
+  if (isset($_GET['rid'])) {
+    $aid = $_GET['rid'];
+  }
+  // Else if no $aid set:
+  else {
+    // Remove all content.
+    unset($node->content);
+    // Display error message.
+    $node->content['error'] = array(
+      '#markup' => t("Invalid URL.  Please check the email sent."),
+    );
+  }
+}
+
+/**
+ * Implements hook_webform_submission_insert().
+ */
+function tmi_recommend_form_webform_submission_insert($node, $submission) {
+  // If this was the Required Recommendation Form node:
+  if ($node->nid == TMI_RECOMMEND_FORM_NID) {
+    $rid = $_GET['rid'];
+    if ($rid) {
+       // Set the Recommendation as submitted..
+      $recommendation = entity_load_single('recommendation', $rid);
+      $recommendation->submitted($submission->sid);
+    }
+  }
+}

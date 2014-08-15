@@ -16,6 +16,16 @@ class RecommendationEntity extends Entity {
   protected function defaultUri() {
     return array('path' => 'recommendation/' . $this->identifier());
   }
+
+  /**
+   * Sets the recommendation's sid_webform to given webform submission $sid.
+   */
+  public function submitted($sid) {
+    $this->sid_webform = $sid;
+    $this->submitted = REQUEST_TIME;
+    $this->save();
+    // @todo: Send MBP requests: 1) To Recommender and 2) To Applicant.
+  }
 }
 
 /**
@@ -32,6 +42,7 @@ class RecommendationEntityController extends EntityAPIController {
     $op = NULL;
     if (isset($entity->is_new)) {
       $op = 'insert';
+      $entity->created = REQUEST_TIME;
     }
     parent::save($entity, $transaction);
     if ($op == 'insert') {
