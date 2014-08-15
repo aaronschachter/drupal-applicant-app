@@ -4,10 +4,30 @@
  * Implements hook_user_user_insert().
  */
 function tmi_user_user_insert(&$edit, $account, $category) {
-  // Create an Application for the active Scholarship for this user.
+
+  // Load the Applicant webform node.
+  $applicant_webform = node_load(TMI_SCHOLARSHIP_APPLICATION_WEBFORM_NID);
+
+  // Prepare a draft Webform submission for the Applicant Webform.
+  $submission = (object) array(
+    'nid' => $applicant_webform->nid,
+    'uid' => $account->uid,
+    'submitted' => REQUEST_TIME,
+    'remote_addr' => ip_address(),
+    'is_draft' => TRUE,
+    'data' => array(),
+  );
+  // Save the Webform submission.
+  module_load_include('inc', 'webform', 'includes/webform.submissions');
+  webform_submission_insert($applicant_webform, $submission);
+
+  // Create an Application entity for the active Scholarship for this user.
   $application = entity_create('application', array(
     'uid' => $account->uid,
-    'nid_scholarship' => TMI_ACTIVE_SCHOLARSHIP_NID,
+    'nid_scholarship' => TMI_SCHOLARSHIP_NID,
+    'sid_webform' => $submission->sid,
   ));
+  // Save the Application entity.
   $application->save();
+
 }

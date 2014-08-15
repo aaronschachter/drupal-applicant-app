@@ -23,3 +23,22 @@ function tmi_application_entity_info() {
   );
   return $info;
 }
+
+/**
+ * Implements hook_menu().
+ */
+function tmi_application_menu() {
+  $items['application'] = array(
+    'title' => 'Application',
+    'page callback' => 'tmi_application_page_callback',
+    'access arguments' => array('access content'),
+  );
+  return $items;
+}
+
+function tmi_application_page_callback() {
+  if (!user_is_logged_in()) {
+    return t("Please login.");
+  }
+  return "Hello world";
+}

@@ -7,4 +7,6 @@
 include_once 'tmi_scholarship.features.inc';
 
 // Hardcoded for now.
-define ('TMI_ACTIVE_SCHOLARSHIP_NID', 3);
+define ('TMI_SCHOLARSHIP_NID', 3);
+define ('TMI_SCHOLARSHIP_APPLICATION_WEBFORM_NID', 2);
+define ('TMI_SCHOLARSHIP_RECOMMENDATION_WEBFORM_NID', 1);
