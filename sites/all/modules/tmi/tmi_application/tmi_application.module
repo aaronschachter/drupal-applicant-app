@@ -30,10 +30,42 @@ function tmi_application_entity_info() {
 function tmi_application_menu() {
   $items['application'] = array(
     'title' => 'Application',
-    'page callback' => 'tmi_application_page_callback',
+    'page callback' => 'tmi_application_page',
     'access arguments' => array('access content'),
   );
+  $items['application/%application'] = array(
+    'title' => 'Application',
+    'page callback' => 'tmi_application_view_application_page',
+    'page arguments' => array(1),
+    'access callback' => 'tmi_application_review_page_access'
+  );
   return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function tmi_application_theme($existing, $type, $theme, $path) {
+  return array(
+    'application' => array(
+      'template' => 'application',
+      'path' => drupal_get_path('module', 'tmi_application') . '/theme',
+    ),
+  );
+}
+/**
+ * Menu autoloader for %application.
+ */
+function application_load($aid) {
+  return entity_load_single('application', $aid);
+}
+
+/**
+ * Access callback for Application Review page.
+ */
+function tmi_application_review_page_access() {
+  return user_access('administer modules');
 }
 
 /**
@@ -51,7 +83,7 @@ function tmi_application_get_application_aid($uid = NULL) {
     ->fetchField();
 }
 
-function tmi_application_page_callback() {
+function tmi_application_page() {
   if (!user_is_logged_in()) {
     return t("Please login.");
   }
@@ -107,4 +139,18 @@ function tmi_application_webform_submission_insert($node, $submission) {
     $application = entity_load_single('application', $aid);
     $application->submitted($submission->sid);
   }
+}
+
+/**
+ * Page callback for the Application Review page.
+ */
+function tmi_application_view_application_page($application) {
+  // Get Applicant details.
+  $account = user_load($application->uid);
+  // Get rendered Scholarship webform submission.
+  $application->submission = $application->get_submission();
+  return theme('application', array(
+    'account' => $account,
+    'application' => $application,
+  ));
 }

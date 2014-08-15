@@ -59,6 +59,19 @@ class ApplicationEntity extends Entity {
     $this->save();
     // @todo: Send email to Applicant informing them Application is completed.
   }
+
+  /**
+   * Loads the Application Scholarship webform submission.
+   */
+  public function get_submission($rendered = TRUE) {
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $submission = webform_get_submission($this->nid_scholarship, $this->sid_webform);
+    if ($rendered) {
+      $scholarship = node_load($this->nid_scholarship);
+      return webform_submission_render($scholarship, $submission, NULL, 'display');
+    }
+    return $submission;
+  }
 }
 
 /**
