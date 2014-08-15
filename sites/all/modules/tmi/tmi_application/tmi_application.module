@@ -36,9 +36,63 @@ function tmi_application_menu() {
   return $items;
 }
 
+/**
+ * Retrieve the Application aid for the current user.
+ */
+function tmi_application_get_application_aid($uid = NULL) {
+  if (!$uid) {
+    global $user;
+    $uid = $user->uid;
+  } 
+  return db_select("tmi_application", "a")
+    ->fields("a", array("aid"))
+    ->condition("uid", $uid)
+    ->execute()
+    ->fetchField();
+}
+
 function tmi_application_page_callback() {
   if (!user_is_logged_in()) {
     return t("Please login.");
   }
-  return "Hello world";
+
+  // Load the Scholarship webform node.
+  $node = node_load(3);
+  webform_node_view($node, 'full');
+  $content = isset($node->content['webform']) ? $node->content['webform'] : array();
+  // If a webform exists:
+  if ($output = theme_webform_view($node->content)) {
+    // Return it.
+    return $output;
+  }
+
+  // If we've made it this far, the webform has been submitted.
+  return tmi_application_status_page();
+
+}
+
+function tmi_application_status_page() {
+  drupal_set_title("Application Status");
+  $output = '';
+  $aid = tmi_application_get_application_aid();
+
+  // Display Recommendations.
+  $recs = tmi_recommendation_get_recommendations($aid);
+  if (empty($recs)) {
+    $output = "No recommendations";
+  }
+  else {
+    $output .= "<h2>Recommendations</h2>";
+    $output .= "<ul>";
+    foreach ($recs as $recommendation) {
+      $output .= "<li>" . $recommendation->email . "</li>";
+    }
+    $output .= "</ul>";
+  }
+
+  // Render the Recommendation Request form.
+  $output .= "<h2>Request Recommendation</h2>";
+  $form = drupal_get_form('tmi_recommendation_request_form', $aid);
+  $output .= render($form);
+  return $output;
 }

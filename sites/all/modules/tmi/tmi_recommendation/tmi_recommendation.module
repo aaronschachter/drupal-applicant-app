@@ -23,3 +23,78 @@ function tmi_recommendation_entity_info() {
   );
   return $info;
 }
+
+/**
+ * Return all Recommendations for a given Application $aid.
+ *
+ * @param int $aid
+ *   The Application aid.
+ *
+ * @return array
+ */
+function tmi_recommendation_get_recommendations($aid) {
+  return db_select("tmi_recommendation", "r")
+    ->fields("r")
+    ->condition("aid", $aid)
+    ->execute()
+    ->fetchAll();
+}
+
+/**
+ * Form constructor for a Recommendation request.
+ *
+ * @param int $aid
+ *   The Application aid.
+ */
+function tmi_recommendation_request_form($form, &$form_state, $aid) {
+  $form['aid'] = array(
+    '#type' => 'hidden',
+    '#default_value' => $aid,
+    '#access' => FALSE,
+  );
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t("Email"),
+    '#description' => t("The Recommender's email."),
+  );
+  $form['first_name'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t("First Name"),
+    '#description' => t("The Recommender's first name."),
+  );
+  $form['last_name'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t("Last Name"),
+    '#description' => t("The Recommender's last name."),
+  );
+  $form['actions'] = array(
+    '#type' => 'actions',
+    'submit' => array(
+      '#type' => 'submit',
+      '#value' => t("Send Request"),
+    ),
+  );
+  return $form;
+}
+
+/**
+ * Submit callback for tmi_recommendation_request_form().
+ */
+function tmi_recommendation_request_form_submit($form, &$form_state) {
+  // If user session no longer exists:
+  if (!user_is_logged_in()) {
+    // Tell them that.
+    drupal_set_message(t("You are no longer logged in. Please log in."), 'error');
+  }
+  $values = $form_state['values'];
+  $recommendation = entity_create('recommendation', array(
+    'aid' => $values['aid'],
+    'email' => $values['email'],
+    'first_name' => $values['first_name'],
+    'last_name' => $values['last_name'],
+  ));
+  $recommendation->save();
+}
