@@ -66,6 +66,13 @@ class RecommendationEntityController extends EntityAPIController {
     parent::save($entity, $transaction);
     if ($op == 'insert') {
       // @todo: Send MBP request with Recommendation details.
+      // Get the Recommendation Form path.
+      $recommend_form_link = 'node/' . TMI_RECOMMEND_FORM_NID;
+      // Append the Recommendation rid as query string.
+      $recommend_form_link .= '?rid=' . $entity->rid;
+      if (TMI_DEBUG) {
+        watchdog('tmi_recommendation', '$this->save: ' . $recommend_form_link);
+      }
     }
   }
 }
