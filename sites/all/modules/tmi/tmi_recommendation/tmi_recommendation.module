@@ -41,6 +41,18 @@ function tmi_recommendation_get_recommendations($aid) {
 }
 
 /**
+ * For a given Recommendation $rid, get its Recommend Form URL.
+ *
+ * @param int $rid
+ *   The Recommendation $rid.
+ *
+ * @return string
+ */
+function tmi_recommendation_get_recommend_form_url($rid) {
+  return 'node/' . TMI_RECOMMEND_FORM_NID . '?rid=' . $rid;
+}
+
+/**
  * Form constructor for a Recommendation request.
  *
  * @param int $aid
@@ -121,14 +133,21 @@ function tmi_recommendation_get_recommendations_table($aid, $admin = FALSE) {
     t('Requested'),
     t('Submitted'),
   );
+  if ($admin) {
+    $header[] = t('Form');
+  }
   $rows = array();
-  foreach ($recommendations as $rec) {
-    $rows[] = array(
+  foreach ($recommendations as $delta => $rec) {
+    $rows[$delta] = array(
       $rec->first_name . ' ' . $rec->last_name,
       $rec->email,
       format_date($rec->created, 'short'),
       $rec->submitted ? format_date($rec->submitted, 'short') : '',
     );
+    if ($admin) {
+      $form_url = tmi_recommendation_get_recommend_form_url($rec->rid);
+      $rows[$delta][] = '<a href="/' . $form_url . '">url</a>';
+    }
   }
   return theme('table', array('header' => $header, 'rows' => $rows));
 }

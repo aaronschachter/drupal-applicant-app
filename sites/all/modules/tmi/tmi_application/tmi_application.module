@@ -74,12 +74,14 @@ function tmi_application_page_callback() {
 
 function tmi_application_status_page() {
   $output = '';
+  $admin = user_access('administer modules');
+
   $aid = tmi_application_get_application_aid();
   $application = entity_load_single('application', $aid);
   drupal_set_title("Application Status: " . ucfirst($application->status));
   
   // Display Recommendations.
-  if ($recs = tmi_recommendation_get_recommendations_table($aid)) {
+  if ($recs = tmi_recommendation_get_recommendations_table($aid, $admin)) {
     $output .= "<h2>Recommendations</h2>";
     $output .= $recs;
   }
