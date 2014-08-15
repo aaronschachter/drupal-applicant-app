@@ -103,9 +103,15 @@ function tmi_recommendation_request_form_submit($form, &$form_state) {
 
 /**
  * Returns a table of recommendations for given Application $aid.
+ *
+ * @return
+ *   The table HTML, or FALSE if no recommendations. 
  */
 function tmi_recommendation_get_recommendations_table($aid, $admin = FALSE) {
   $recommendations = tmi_recommendation_get_recommendations($aid);
+  if (empty($recommendations)) {
+    return FALSE;
+  }
   $header = array(
     t('Name'),
     t('Email'),

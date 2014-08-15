@@ -73,20 +73,15 @@ function tmi_application_page_callback() {
 }
 
 function tmi_application_status_page() {
-
   $output = '';
   $aid = tmi_application_get_application_aid();
   $application = entity_load_single('application', $aid);
   drupal_set_title("Application Status: " . ucfirst($application->status));
-
-  $output .= "<h2>Recommendations</h2>";
+  
   // Display Recommendations.
-  $recs = tmi_recommendation_get_recommendations($aid);
-  if (empty($recs)) {
-    $output = "No recommendations";
-  }
-  else {
-    $output .= tmi_recommendation_get_recommendations_table($aid);
+  if ($recs = tmi_recommendation_get_recommendations_table($aid)) {
+    $output .= "<h2>Recommendations</h2>";
+    $output .= $recs;
   }
 
   // Render the Recommendation Request form.
