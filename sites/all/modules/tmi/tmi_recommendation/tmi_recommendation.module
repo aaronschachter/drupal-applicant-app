@@ -95,6 +95,8 @@ function tmi_recommendation_request_form_submit($form, &$form_state) {
     'email' => $values['email'],
     'first_name' => $values['first_name'],
     'last_name' => $values['last_name'],
+    // Hardcode as required for now.
+    'required' => 1,
   ));
   $recommendation->save();
 }

@@ -16,6 +16,15 @@ class ApplicationEntity extends Entity {
   protected function defaultUri() {
     return array('path' => 'application/' . $this->identifier());
   }
+
+  /**
+   * Sets the application's sid_webform to given webform submission $sid.
+   */
+  public function submitted($sid) {
+    $this->sid_webform = $sid;
+    $this->submitted = REQUEST_TIME;
+    $this->save();
+  }
 }
 
 /**
