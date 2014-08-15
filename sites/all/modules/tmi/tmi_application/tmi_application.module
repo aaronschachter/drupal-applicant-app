@@ -29,7 +29,6 @@ function tmi_application_entity_info() {
  */
 function tmi_application_menu() {
   $items['application'] = array(
-    'title' => 'Application',
     'page callback' => 'tmi_application_page',
     'access arguments' => array('access content'),
   );
@@ -50,6 +49,10 @@ function tmi_application_theme($existing, $type, $theme, $path) {
   return array(
     'application' => array(
       'template' => 'application',
+      'path' => drupal_get_path('module', 'tmi_application') . '/theme',
+    ),
+    'application_status' => array(
+      'template' => 'application-status',
       'path' => drupal_get_path('module', 'tmi_application') . '/theme',
     ),
   );
@@ -104,27 +107,22 @@ function tmi_application_page() {
 
 }
 
+/**
+ * Returns HTML for the Application status page.
+ */
 function tmi_application_status_page() {
-  $output = '';
-  $admin = user_access('administer modules');
-
   $aid = tmi_application_get_application_aid();
   $application = entity_load_single('application', $aid);
-  drupal_set_title("Application Status: " . ucfirst($application->status));
-  
-  // Display Recommendations.
-  if ($recs = tmi_recommendation_get_recommendations_table($aid, $admin)) {
-    $output .= "<h2>Recommendations</h2>";
-    $output .= $recs;
-  }
+  $vars = $application->get_theme_vars();
+  $admin = user_access('administer modules');
 
-  // Render the Recommendation Request form.
-  $output .= "<h2>Request Recommendation</h2>";
-  $form = drupal_get_form('tmi_recommendation_request_form', $aid);
-  $output .= render($form);
-
-  $output .= theme('application', $application->get_theme_vars());
-  return $output;
+  return theme('application_status', array(
+    'account' => $vars['account'],
+    'application' => $vars['application'],
+    'recommendations' => tmi_recommendation_get_recommendations_table($aid, $admin),
+    'request_form' => drupal_get_form('tmi_recommendation_request_form', $aid),
+    'application_view' => theme('application', $vars),
+  ));
 }
 
 /**
