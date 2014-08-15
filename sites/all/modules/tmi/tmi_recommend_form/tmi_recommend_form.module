@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the tmi_recommend_form feature.
+ */
+
+include_once 'tmi_recommend_form.features.inc';
