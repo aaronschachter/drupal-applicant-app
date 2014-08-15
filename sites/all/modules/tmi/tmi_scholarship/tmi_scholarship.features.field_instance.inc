@@ -63,12 +63,12 @@ function tmi_scholarship_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-scholarship-field_webform_recommend'
-  $field_instances['node-scholarship-field_webform_recommend'] = array(
+  // Exported field_instance: 'node-scholarship-field_recommend_form_optional'
+  $field_instances['node-scholarship-field_recommend_form_optional'] = array(
     'bundle' => 'scholarship',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Select the webform to use as an Optional Recommendation, if applicable.',
+    'description' => 'Select the Recommendation Form to use for optional Recommendations, if applicable.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -77,7 +77,7 @@ function tmi_scholarship_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 4,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -87,8 +87,8 @@ function tmi_scholarship_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_webform_recommend',
-    'label' => 'Optional Recommendation Webform',
+    'field_name' => 'field_recommend_form_optional',
+    'label' => 'Optional Recommendation Form',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -102,16 +102,16 @@ function tmi_scholarship_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 0,
+      'weight' => 2,
     ),
   );
 
-  // Exported field_instance: 'node-scholarship-field_webform_recommend_required'
-  $field_instances['node-scholarship-field_webform_recommend_required'] = array(
+  // Exported field_instance: 'node-scholarship-field_recommend_form_required'
+  $field_instances['node-scholarship-field_recommend_form_required'] = array(
     'bundle' => 'scholarship',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Select the webform to be used for the Required Recommendation.',
+    'description' => 'Select the Recommendation Form node to use for required Recommendations.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -120,7 +120,7 @@ function tmi_scholarship_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 3,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -130,8 +130,8 @@ function tmi_scholarship_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_webform_recommend_required',
-    'label' => 'Required Recommendation Webform',
+    'field_name' => 'field_recommend_form_required',
+    'label' => 'Required Recommendation Form',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -145,17 +145,17 @@ function tmi_scholarship_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => -1,
+      'weight' => 1,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Application Dates');
-  t('Optional Recommendation Webform');
-  t('Required Recommendation Webform');
-  t('Select the webform to be used for the Required Recommendation.');
-  t('Select the webform to use as an Optional Recommendation, if applicable.');
+  t('Optional Recommendation Form');
+  t('Required Recommendation Form');
+  t('Select the Recommendation Form node to use for required Recommendations.');
+  t('Select the Recommendation Form to use for optional Recommendations, if applicable.');
   t('Set when the Scholarship Application process begins and ends.');
 
   return $field_instances;

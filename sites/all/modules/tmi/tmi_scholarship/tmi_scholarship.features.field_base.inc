@@ -40,13 +40,13 @@ function tmi_scholarship_field_default_field_bases() {
     'type' => 'datetime',
   );
 
-  // Exported field_base: 'field_webform_recommend'
-  $field_bases['field_webform_recommend'] = array(
+  // Exported field_base: 'field_recommend_form_optional'
+  $field_bases['field_recommend_form_optional'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_webform_recommend',
+    'field_name' => 'field_recommend_form_optional',
     'foreign keys' => array(
       'node' => array(
         'columns' => array(
@@ -74,7 +74,7 @@ function tmi_scholarship_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'webform' => 'webform',
+          'recommend_form' => 'recommend_form',
         ),
       ),
       'target_type' => 'node',
@@ -83,13 +83,13 @@ function tmi_scholarship_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_webform_recommend_required'
-  $field_bases['field_webform_recommend_required'] = array(
+  // Exported field_base: 'field_recommend_form_required'
+  $field_bases['field_recommend_form_required'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_webform_recommend_required',
+    'field_name' => 'field_recommend_form_required',
     'foreign keys' => array(
       'node' => array(
         'columns' => array(
@@ -117,7 +117,7 @@ function tmi_scholarship_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'webform' => 'webform',
+          'recommend_form' => 'recommend_form',
         ),
       ),
       'target_type' => 'node',
