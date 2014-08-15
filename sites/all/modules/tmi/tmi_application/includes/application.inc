@@ -72,6 +72,20 @@ class ApplicationEntity extends Entity {
     }
     return $submission;
   }
+
+  /**
+   * Returns array of variables to pass to the application theme function.
+   */
+  public function get_theme_vars() {
+    // Add themed webform submission.
+    $this->submission = $this->get_submission();
+    return array(
+      // Get Applicant details.
+      'account' => user_load($this->uid),
+      'application' => $this,
+    );
+  }
+
 }
 
 /**

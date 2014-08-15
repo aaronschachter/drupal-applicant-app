@@ -122,6 +122,8 @@ function tmi_application_status_page() {
   $output .= "<h2>Request Recommendation</h2>";
   $form = drupal_get_form('tmi_recommendation_request_form', $aid);
   $output .= render($form);
+
+  $output .= theme('application', $application->get_theme_vars());
   return $output;
 }
 
@@ -145,12 +147,5 @@ function tmi_application_webform_submission_insert($node, $submission) {
  * Page callback for the Application Review page.
  */
 function tmi_application_view_application_page($application) {
-  // Get Applicant details.
-  $account = user_load($application->uid);
-  // Get rendered Scholarship webform submission.
-  $application->submission = $application->get_submission();
-  return theme('application', array(
-    'account' => $account,
-    'application' => $application,
-  ));
+  return theme('application', $application->get_theme_vars());
 }
