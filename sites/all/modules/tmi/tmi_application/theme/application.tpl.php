@@ -15,3 +15,17 @@
 
   <?php print $application->submission; ?>
 </div>
+
+<?php /**** Reviewer details ****/ ?>
+
+<h2>Recommendations</h2>
+<?php if (isset($application->recommendations)): ?>
+  <?php foreach ($application->recommendations as $rec): ?>
+    <div><?php print $rec; ?></div>
+  <?php endforeach; ?>
+<?php else: ?>
+  <p>No recommendations have been requested.</p>
+<?php endif; ?>
+
+<h2>Review</h2>
+<?php // print render($review_form); ?>

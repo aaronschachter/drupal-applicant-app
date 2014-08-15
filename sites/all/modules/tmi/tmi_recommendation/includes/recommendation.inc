@@ -45,6 +45,19 @@ class RecommendationEntity extends Entity {
     }
     // @todo: Send MBP requests: 1) To Recommender and 2) To Applicant.
   }
+
+  /**
+   * Loads the Recommendation webform submission.
+   */
+  public function get_submission($rendered = TRUE) {
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $submission = webform_get_submission(TMI_RECOMMEND_FORM_NID, $this->sid_webform);
+    if ($rendered) {
+      $recommend_form = node_load(TMI_RECOMMEND_FORM_NID);
+      return webform_submission_render($recommend_form, $submission, NULL, 'display');
+    }
+    return $submission;
+  }
 }
 
 /**

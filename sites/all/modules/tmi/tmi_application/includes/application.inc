@@ -73,12 +73,28 @@ class ApplicationEntity extends Entity {
     return $submission;
   }
 
+  public function get_recommendations() {
+    return db_select("tmi_recommendation", "r")
+      ->fields("r")
+      ->condition("aid", $this->aid)
+      ->execute()
+      ->fetchAll();
+  }
+
   /**
    * Returns array of variables to pass to the application theme function.
    */
   public function get_theme_vars() {
     // Add themed webform submission.
     $this->submission = $this->get_submission();
+    // @todo: Change to Review Application permission.
+    if (user_access('administer modules')) {
+      $recommendations = $this->get_recommendations();
+      foreach ($recommendations as $rec) {
+        $recommendation = entity_load_single('recommendation', $rec->rid);
+        $this->recommendations[] = $recommendation->get_submission();
+      }
+    }
     return array(
       // Get Applicant details.
       'account' => user_load($this->uid),
