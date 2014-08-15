@@ -23,7 +23,25 @@ class ApplicationEntity extends Entity {
   public function submitted($sid) {
     $this->sid_webform = $sid;
     $this->submitted = REQUEST_TIME;
+   if (TMI_DEBUG) {
+      watchdog('tmi_application', '$this->submitted: ' . json_encode($this));
+    }
     $this->save();
+  }
+
+  /**
+   * Sets the application's completed timestamp.
+   */
+  public function completed($time = NULL) {
+    if (!$time) {
+      $time = REQUEST_TIME;
+    }
+    $this->completed = $time;
+    if (TMI_DEBUG) {
+      watchdog('tmi_application', '$this->completed: ' . json_encode($this));
+    }
+    $this->save();
+    // @todo: Send email to Applicant informing them Application is completed.
   }
 }
 

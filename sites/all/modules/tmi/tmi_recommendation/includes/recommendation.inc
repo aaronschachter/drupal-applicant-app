@@ -21,9 +21,28 @@ class RecommendationEntity extends Entity {
    * Sets the recommendation's sid_webform to given webform submission $sid.
    */
   public function submitted($sid) {
+    $time = REQUEST_TIME;
     $this->sid_webform = $sid;
-    $this->submitted = REQUEST_TIME;
-    $this->save();
+    $this->submitted = $time;
+    if (TMI_DEBUG) {
+      watchdog('tmi_recommendation', '$this->submitted: ' . json_encode($this));
+    }
+    try {
+      $this->save();
+    }
+    catch (Exception $e) {
+      watchdog('tmi_recommendation', $e, NULL, 'error');
+    }
+    
+    // If this was a required recommendation:
+    if ($this->required) {
+      // Set the application as completed.
+      $application = entity_load_single('application', $this->aid);
+      if (TMI_DEBUG) {
+        watchdog('tmi_recommendation', 'Application: ' . json_encode($application));
+      }
+      $application->completed();
+    }
     // @todo: Send MBP requests: 1) To Recommender and 2) To Applicant.
   }
 }

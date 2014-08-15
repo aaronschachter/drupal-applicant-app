@@ -40,8 +40,11 @@ function tmi_recommend_form_webform_submission_insert($node, $submission) {
   if ($node->nid == TMI_RECOMMEND_FORM_NID) {
     $rid = $_GET['rid'];
     if ($rid) {
-       // Set the Recommendation as submitted..
+       // Set the Recommendation as submitted.
       $recommendation = entity_load_single('recommendation', $rid);
+      if (TMI_DEBUG) {
+        watchdog('tmi_recommend_form_webform_submission_insert', json_encode($recommendation));
+      }
       $recommendation->submitted($submission->sid);
     }
   }
