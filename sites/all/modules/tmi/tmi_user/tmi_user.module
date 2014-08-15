@@ -8,6 +8,8 @@ function tmi_user_user_insert(&$edit, $account, $category) {
   $application = entity_create('application', array(
     'uid' => $account->uid,
     'nid_scholarship' => TMI_SCHOLARSHIP_NID,
+    'submitted' => NULL,
+    'completed' => NULL,
   ));
   // Save the Application entity.
   $application->save();

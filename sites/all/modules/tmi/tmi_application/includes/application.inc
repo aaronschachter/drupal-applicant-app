@@ -18,6 +18,22 @@ class ApplicationEntity extends Entity {
   }
 
   /**
+   * Override construct to set status property.
+   */
+  public function __construct(array $values = array(), $entityType = NULL) {
+    parent::__construct($values, $entityType);
+    $this->fids = array();
+    $status = 'draft';
+    if ($this->completed) {
+      $status = 'completed';
+    }
+    elseif ($this->submitted) {
+      $status = 'submitted';
+    }
+    $this->status = $status;
+  }
+
+  /**
    * Sets the application's sid_webform to given webform submission $sid.
    */
   public function submitted($sid) {

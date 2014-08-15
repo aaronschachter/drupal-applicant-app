@@ -100,3 +100,26 @@ function tmi_recommendation_request_form_submit($form, &$form_state) {
   ));
   $recommendation->save();
 }
+
+/**
+ * Returns a table of recommendations for given Application $aid.
+ */
+function tmi_recommendation_get_recommendations_table($aid, $admin = FALSE) {
+  $recommendations = tmi_recommendation_get_recommendations($aid);
+  $header = array(
+    t('Name'),
+    t('Email'),
+    t('Requested'),
+    t('Submitted'),
+  );
+  $rows = array();
+  foreach ($recommendations as $rec) {
+    $rows[] = array(
+      $rec->first_name . ' ' . $rec->last_name,
+      $rec->email,
+      format_date($rec->created, 'short'),
+      $rec->submitted ? format_date($rec->submitted, 'short') : '',
+    );
+  }
+  return theme('table', array('header' => $header, 'rows' => $rows));
+}
