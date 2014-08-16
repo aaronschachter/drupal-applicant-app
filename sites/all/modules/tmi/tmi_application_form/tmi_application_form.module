@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the tmi_application_form feature.
+ */
+
+include_once 'tmi_application_form.features.inc';
