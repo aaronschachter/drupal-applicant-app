@@ -49,3 +49,55 @@ function tmi_webform_webform_submission_insert($node, $submission) {
     }
   }
 }
+
+/**
+ * Implements hook_webform_select_options_info().
+ */
+function tmi_webform_webform_select_options_info() {
+  $items = array();
+  $items['ranking'] = array(
+    'title' => t('Ranking'),
+    'options callback' => 'tmi_webform_get_options_ranking',
+    'file' => 'includes/webform.options.inc',
+  );
+  $items['gpa'] = array(
+    'title' => t('GPA'),
+    'options callback' => 'tmi_webform_get_options_gpa',
+    'file' => 'includes/webform.options.inc',
+  );
+  return $items;
+}
+
+/**
+ * Callback for Ranking options.
+ */
+function tmi_webform_get_options_ranking() {
+  return array(
+    'top10' => t("Top 10%"),
+    'top25' => t("Top 25%"),
+    'average' => t("Average"),
+    'bottom25' => t("Bottom 25%"),
+    'bottom10' => t("Bottom 10%"),
+  );
+}
+
+/**
+ * Callback for GPA options.
+ */
+function tmi_webform_get_options_gpa() {
+  return array(
+    '4.0' => "(97-100) = 4.0",
+    '3.9' => "(93-96) = 4.0",
+    '3.7' => "(90-92) = 3.7",
+    '3.3' => "(87-89) = 3.3",
+    '3.0' => "(83-86) = 3.0",
+    '2.7' => "(80-82) = 2.7",
+    '2.3' => "(77-79) = 2.3",
+    '2.0' => "(73-76) = 2.0",
+    '1.7' => "(70-72) = 1.7",
+    '1.3' => "(67-69) = 1.3",
+    '1.0' => "(65-66) = 1.0",
+    '0.0' => "(below 65) = 0.0",
+  );
+}
+
