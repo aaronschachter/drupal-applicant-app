@@ -19,9 +19,12 @@ function tmi_recommend_form_node_view($node, $view_mode, $langcode) {
 
   // Make sure an Recommendation rid has been passed into the URL.
   if (isset($_GET['rid'])) {
-    $aid = $_GET['rid'];
+    // @todo: Decrypt passed value.
+    $rid = $_GET['rid'];
+    // @todo: Check if the Recommendation has been submitted.  If so, no form.
   }
-  // Else if no $aid set:
+
+  // Else if no 'rid' found in the query string:
   else {
     // Remove all content.
     unset($node->content);
@@ -32,20 +35,3 @@ function tmi_recommend_form_node_view($node, $view_mode, $langcode) {
   }
 }
 
-/**
- * Implements hook_webform_submission_insert().
- */
-function tmi_recommend_form_webform_submission_insert($node, $submission) {
-  // If this was the Required Recommendation Form node:
-  if ($node->nid == TMI_RECOMMEND_FORM_NID) {
-    $rid = $_GET['rid'];
-    if ($rid) {
-       // Set the Recommendation as submitted.
-      $recommendation = entity_load_single('recommendation', $rid);
-      if (TMI_DEBUG) {
-        watchdog('tmi_recommend_form_webform_submission_insert', json_encode($recommendation));
-      }
-      $recommendation->submitted($submission->sid);
-    }
-  }
-}

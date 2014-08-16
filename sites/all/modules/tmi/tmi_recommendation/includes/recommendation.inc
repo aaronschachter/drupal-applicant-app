@@ -32,7 +32,7 @@ class RecommendationEntity extends Entity {
    */
   public function submitted($sid) {
     $this->submitted = REQUEST_TIME;
-    $this->sid_webform = $sid;
+    $this->sid = $sid;
     if (TMI_DEBUG) {
       watchdog('tmi_recommendation', '$this->submitted: ' . json_encode($this));
     }
@@ -46,7 +46,7 @@ class RecommendationEntity extends Entity {
     // If this was a required recommendation:
     if ($this->required) {
       // Set the application as completed.
-      $application = entity_load_single('application', $this->aid);
+      $application = application_load($this->aid);
       if (TMI_DEBUG) {
         watchdog('tmi_recommendation', 'Application: ' . json_encode($application));
       }

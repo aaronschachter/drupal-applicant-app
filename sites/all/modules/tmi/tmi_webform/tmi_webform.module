@@ -28,7 +28,7 @@ function tmi_webform_get_submission_html($nid, $sid) {
  * Implements hook_webform_submission_insert().
  */
 function tmi_webform_webform_submission_insert($node, $submission) {
-  // If the submission is gnereated by the Application Form node:
+  // If the Webform submission was inserted via Application Form webform node:
   if ($node->nid == TMI_APPLICATION_FORM_NID) {
     // Get the uid of the user who submitted it.
     $uid = $submission->uid;
@@ -37,5 +37,15 @@ function tmi_webform_webform_submission_insert($node, $submission) {
     // Set the application as completed with the new $sid.
     $application = entity_load_single('application', $aid);
     $application->submitted($submission->sid);
+  }
+  // Else if was inserted via the Recommend Form webform node:
+  elseif ($node->nid == TMI_RECOMMEND_FORM_NID) {
+    // Load the Recommendation rid from the query string.
+    $rid = $_GET['rid'];
+    if ($rid) {
+       // Set the Recommendation as submitted.
+      $recommendation = entity_load_single('recommendation', $rid);
+      $recommendation->submitted($submission->sid);
+    }
   }
 }
