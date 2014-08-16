@@ -285,3 +285,47 @@ function tmi_application_status_page() {
 function tmi_application_view_application_page($application) {
   return $application->view();
 }
+
+
+/**
+ * Form constructor for a Application review.
+ *
+ * @param object $application
+ *   The Application entity.
+ */
+function tmi_application_review_form($form, &$form_state, $application) {
+  $form['aid'] = array(
+    '#type' => 'hidden',
+    '#default_value' => $application->aid,
+    '#access' => FALSE,
+  );
+  $form['reviewer_rating'] = array(
+    '#type' => 'select',
+    '#required' => TRUE,
+    '#title' => t("Rating"),
+    '#options' => tmi_application_get_review_rating_options(),
+    '#default_value' => $application->reviewer_rating,
+  );
+  $form['reviewer_notes'] = array(
+    '#type' => 'textarea',
+    '#title' => t("Notes"),
+    '#default_value' => $application->reviewer_notes,
+  );
+  $form['actions'] = array(
+    '#type' => 'actions',
+    'submit' => array(
+      '#type' => 'submit',
+      '#value' => t("Save Rating"),
+    ),
+  );
+  return $form;
+}
+
+function tmi_application_get_review_rating_options() {
+  return array(
+    'yes' => t("Yes"),
+    'no' => t("No"),
+    'maybe' => t("Maybe"),
+  );
+
+}

@@ -20,6 +20,10 @@ function tmi_user_user_insert(&$edit, $account, $category) {
     'nid_application_form' => TMI_APPLICATION_FORM_NID,
     'submitted' => NULL,
     'completed' => NULL,
+    'reviewed' => NULL,
+    'reviewer_uid' => NULL,
+    'reviewer_rating' => NULL,
+    'reviewer_notes' => NULL,
   ));
   // Save the Application entity.
   $application->save();

@@ -30,7 +30,7 @@
 
   <?php if ($application->completed): ?>
     <h2>Review</h2>
-    <?php // print render($review_form); ?>
+    <?php print render($application->review_form); ?>
   <?php endif; ?>
 
 <?php endif; ?>

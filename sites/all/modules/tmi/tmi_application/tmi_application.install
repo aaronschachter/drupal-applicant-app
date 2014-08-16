@@ -64,18 +64,26 @@ function tmi_application_schema() {
         'description' => 'The Unix timestamp when the Application was reviewed.',
         'type' => 'int',
       ),
-      'review_score' => array(
-        'description' => 'The Application Review score.',
-        'type' => 'int',
-      ),
       'reviewer_uid' => array(
         'description' => 'The Application Reviewer User uid.',
         'type' => 'int',
+      ),
+      'reviewer_rating' => array(
+        'description' => 'The rating given by the Reviewer.',
+        'type' => 'varchar',
+        'length' => 32,
+      ),
+      'reviewer_notes' => array(
+        'description' => 'Notes added by the Reviewer.',
+        'type' => 'text',
+        'length' => '2048',
       ),
     ),
     'primary key' => array('aid'),
     'indexes' => array(
       'uid' => array('uid'),
+      'reviewer_uid' => array('reviewer_uid'),
+      'reviewer_rating' => array('reviewer_rating'),
     ),
   );
   return $schema;

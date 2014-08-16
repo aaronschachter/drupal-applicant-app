@@ -92,6 +92,8 @@ class ApplicationEntity extends Entity {
         $recommendation = entity_load_single('recommendation', $rec->rid);
         $this->recommendations[] = $recommendation->view();
       }
+      // Add the Review form.
+      $this->review_form = drupal_get_form('tmi_application_review_form', $this);
     }
 
     return theme('application', array(
