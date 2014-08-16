@@ -53,18 +53,6 @@ function tmi_recommendation_get_recommendations($aid) {
 }
 
 /**
- * For a given Recommendation $rid, get its Recommend Form URL.
- *
- * @param int $rid
- *   The Recommendation $rid.
- *
- * @return string
- */
-function tmi_recommendation_get_recommend_form_url($rid) {
-  return 'node/' . TMI_RECOMMEND_FORM_NID . '?rid=' . $rid;
-}
-
-/**
  * Form constructor for a Recommendation request.
  *
  * @param int $aid
@@ -135,7 +123,7 @@ function tmi_recommendation_request_form_submit($form, &$form_state) {
  * @return
  *   The table HTML, or FALSE if no recommendations. 
  */
-function tmi_recommendation_get_recommendations_table($aid, $admin = FALSE) {
+function tmi_recommendation_get_recommendations_table($aid) {
   $recommendations = tmi_recommendation_get_recommendations($aid);
   if (empty($recommendations)) {
     return FALSE;
@@ -146,9 +134,6 @@ function tmi_recommendation_get_recommendations_table($aid, $admin = FALSE) {
     t('Requested'),
     t('Submitted'),
   );
-  if ($admin) {
-    $header[] = t('Form');
-  }
   $rows = array();
   foreach ($recommendations as $delta => $rec) {
     $rows[$delta] = array(
@@ -157,10 +142,6 @@ function tmi_recommendation_get_recommendations_table($aid, $admin = FALSE) {
       format_date($rec->created, 'short'),
       $rec->submitted ? format_date($rec->submitted, 'short') : '',
     );
-    if ($admin) {
-      $form_url = tmi_recommendation_get_recommend_form_url($rec->rid);
-      $rows[$delta][] = '<a href="/' . $form_url . '">url</a>';
-    }
   }
   return theme('table', array('header' => $header, 'rows' => $rows));
 }

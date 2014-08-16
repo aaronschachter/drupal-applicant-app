@@ -1,6 +1,5 @@
 <div style="border-bottom: 1px solid #ccc;">
   <p><strong><?php print $recommendation->email; ?></strong></p>
-  <p><?php print $recommendation->rid; ?></p>
   <p>Requested <?php print format_date($recommendation->created, 'short'); ?></p>
   <a href="/<?php print $recommendation->form_url; ?>"><?php print $recommendation->form_url; ?></a>
 

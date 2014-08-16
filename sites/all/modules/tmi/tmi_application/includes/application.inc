@@ -84,8 +84,7 @@ class ApplicationEntity extends Entity {
     $this->submission = $this->get_submission();
     $is_admin = FALSE;
 
-    // @todo: Change to Review Application permission.
-    if (user_access('administer modules')) {
+    if (user_access('review applications')) {
       $is_admin = TRUE;
       // Add Recommendation views.
       $recommendations = $this->get_recommendations();

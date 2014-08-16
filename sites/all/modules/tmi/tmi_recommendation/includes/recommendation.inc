@@ -23,8 +23,7 @@ class RecommendationEntity extends Entity {
   public function __construct(array $values = array(), $entityType = NULL) {
     parent::__construct($values, $entityType);
     if (isset($this->rid)) {
-      $recommend_form_path = 'node/' . $this->nid_recommend_form;
-      $this->form_url = $recommend_form_path . '?rid=' . $this->rid;
+      $this->form_url = $this->get_form_url();
     }
   }
 
@@ -67,6 +66,10 @@ class RecommendationEntity extends Entity {
     return tmi_webform_get_submission_html($nid, $this->sid);
   }
   
+  public function get_form_url() {
+    $recommend_form_path = 'node/' . $this->nid_recommend_form;
+    return $recommend_form_path . '?rid=' . $this->rid;
+  }
   /**
    * Returns rendered entity HTML.
    */
@@ -97,8 +100,8 @@ class RecommendationEntityController extends EntityAPIController {
     }
     parent::save($entity, $transaction);
     if ($op == 'insert') {
-      // @todo: Send MBP request with Recommendation details.
-      $form_url = tmi_recommendation_get_recommend_form_url($entity->rid);
+      // @todo: Send email with link to form_url to the Recommender.
+      $form_url = $this->get_form_url();
       if (TMI_DEBUG) {
         watchdog('tmi_recommendation', 'form_url: ' . $form_url);
       }

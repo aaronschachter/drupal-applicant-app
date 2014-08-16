@@ -267,11 +267,10 @@ function tmi_application_page() {
 function tmi_application_status_page() {
   $aid = tmi_application_get_application_aid();
   $application = entity_load_single('application', $aid);
-  $admin = user_access('administer modules');
 
   return theme('application_status', array(
     'application' => $application,
-    'recommendations' => tmi_recommendation_get_recommendations_table($aid, $admin),
+    'recommendations' => tmi_recommendation_get_recommendations_table($aid),
     'request_form' => drupal_get_form('tmi_recommendation_request_form', $aid),
   ));
 }
