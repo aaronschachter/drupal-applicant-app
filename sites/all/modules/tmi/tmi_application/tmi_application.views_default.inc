@@ -15,7 +15,7 @@ function tmi_application_views_default_views() {
   $view->description = 'Table view of all Applications.';
   $view->tag = 'default';
   $view->base_table = 'tmi_application';
-  $view->human_name = 'applications';
+  $view->human_name = 'Applications';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -91,6 +91,11 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid']['label'] = 'Applicant';
   $handler->display->display_options['relationships']['uid']['required'] = TRUE;
+  /* Relationship: Applications: Applying to Node nid */
+  $handler->display->display_options['relationships']['nid']['id'] = 'nid';
+  $handler->display->display_options['relationships']['nid']['table'] = 'tmi_application';
+  $handler->display->display_options['relationships']['nid']['field'] = 'nid';
+  $handler->display->display_options['relationships']['nid']['required'] = TRUE;
   /* Field: Applications: Application aid */
   $handler->display->display_options['fields']['aid']['id'] = 'aid';
   $handler->display->display_options['fields']['aid']['table'] = 'tmi_application';
@@ -125,6 +130,18 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['submitted']['alter']['path'] = 'admin/applications/[aid]';
   $handler->display->display_options['fields']['submitted']['date_format'] = 'short';
   $handler->display->display_options['fields']['submitted']['second_date_format'] = 'long';
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['relationship'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['nid']['title'] = '%1 Applications';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: User: E-mail */
   $handler->display->display_options['filters']['mail']['id'] = 'mail';
   $handler->display->display_options['filters']['mail']['table'] = 'users';
@@ -144,7 +161,7 @@ function tmi_application_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/applications';
+  $handler->display->display_options['path'] = 'node/%/applications';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Applications';
   $handler->display->display_options['menu']['description'] = 'List of all applications.';

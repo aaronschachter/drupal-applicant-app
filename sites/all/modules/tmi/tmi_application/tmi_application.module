@@ -119,8 +119,8 @@ function tmi_application_views_data() {
     ),
   );
   $data['tmi_application']['nid'] = array(
-    'title' => t('Scholarship nid'),
-    'help' => t('Scholarship node nid.'),
+    'title' => t('Applying to Node nid'),
+    'help' => t('The node the Applicant is applying to.'),
     'field' => array(
       'handler' => 'views_handler_field_numeric',
       'click sortable' => TRUE,
@@ -134,7 +134,7 @@ function tmi_application_views_data() {
     'relationship' => array(
       'base' => 'node',
       'handler' => 'views_handler_relationship',
-      'label' => t('Scholarship node nid'),
+      'label' => t('Applying to'),
     ),
   );
   $data['tmi_application']['uid'] = array(

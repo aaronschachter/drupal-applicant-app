@@ -10,7 +10,7 @@
 function tmi_application_schema() {
   $schema = array();
   $schema['tmi_application'] = array(
-    'description' => 'Table of Scholarship Applications.',
+    'description' => 'Table of Applications.',
     'fields' => array(
       'aid' => array(
         'description' => 'Primary key.',
@@ -24,14 +24,14 @@ function tmi_application_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'nid_scholarship' => array(
-        'description' => 'The Scholarship Node nid.',
+      'nid' => array(
+        'description' => 'The Node nid to Applicant is applying to.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
-      'sid_webform' => array(
-        'description' => 'The Application webform submission.',
+      'sid_application_form' => array(
+        'description' => 'The Application Form webform submission.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
