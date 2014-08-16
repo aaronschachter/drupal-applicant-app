@@ -1,6 +1,12 @@
 <?php
 /**
  * @file
+ * Code for the tmi_application feature.
+ */
+
+include_once 'tmi_application.features.inc';
+/**
+ * @file
  * Code for the tmi_scholarship_application module.
  */
 
@@ -32,10 +38,10 @@ function tmi_application_menu() {
     'page callback' => 'tmi_application_page',
     'access arguments' => array('access content'),
   );
-  $items['application/%application'] = array(
+  $items['admin/applications/%application'] = array(
     'title' => 'Application',
     'page callback' => 'tmi_application_view_application_page',
-    'page arguments' => array(1),
+    'page arguments' => array(2),
     'access callback' => 'user_access',
     'access arguments' => array('review applications'),
   );
@@ -70,6 +76,130 @@ function tmi_application_theme($existing, $type, $theme, $path) {
   );
 }
 
+/**
+ * Implements hook_views_data().
+ */
+function tmi_application_views_data() {
+  // Define dosomething_signup table.
+  $data['tmi_application']['table']['group'] = t('Applications');
+  $data['tmi_application']['table']['base'] = array(
+    'field' => 'aid',
+    'title' => t('Applications'),
+    'help' => t('Applications table.'),
+    'weight' => -10,
+  );
+  $data['tmi_application']['table']['join'] = array(
+    'node' => array(
+      'left_field' => 'nid',
+      'field' => 'nid',
+    ),
+    'users' => array(
+      'left_field' => 'uid',
+      'field' => 'uid',
+    ),
+  );
+
+  $data['tmi_application']['aid'] = array(
+    'title' => t('Application aid'),
+    'help' => t('Application primary key.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'relationship' => array(
+      'base' => 'tmi_application',
+      'handler' => 'views_handler_relationship',
+      'label' => t('Application aid'),
+    ),
+  );
+  $data['tmi_application']['nid'] = array(
+    'title' => t('Scholarship nid'),
+    'help' => t('Scholarship node nid.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'relationship' => array(
+      'base' => 'node',
+      'handler' => 'views_handler_relationship',
+      'label' => t('Scholarship node nid'),
+    ),
+  );
+  $data['tmi_application']['uid'] = array(
+    'title' => t('Uid'),
+    'help' => t('Applicant User uid.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'relationship' => array(
+      'base' => 'users',
+      'handler' => 'views_handler_relationship',
+      'label' => t('Applicant User'),
+    ),
+  );
+  $data['tmi_application']['created'] = array(
+    'title' => t('Date created'),
+    'help' => t('Date the application was created.'),
+    'field' => array(
+      'handler' => 'views_handler_field_date',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort_date',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_date',
+    ),
+  );
+  $data['tmi_application']['submitted'] = array(
+    'title' => t('Date submitted'),
+    'help' => t('Date the application was submitted.'),
+    'field' => array(
+      'handler' => 'views_handler_field_date',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort_date',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_date',
+    ),
+  );
+  $data['tmi_application']['completed'] = array(
+    'title' => t('Date completed'),
+    'help' => t('Date the application was completed.'),
+    'field' => array(
+      'handler' => 'views_handler_field_date',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort_date',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_date',
+    ),
+  );
+  return $data;
+}
 /**
  * Menu autoloader for %application.
  */
