@@ -18,12 +18,22 @@ class RecommendationEntity extends Entity {
   }
 
   /**
+   * Override construct to set status property.
+   */
+  public function __construct(array $values = array(), $entityType = NULL) {
+    parent::__construct($values, $entityType);
+    if (isset($this->rid)) {
+      $recommend_form_path = 'node/' . $this->nid_recommend_form;
+      $this->form_url = $recommend_form_path . '?rid=' . $this->rid;
+    }
+  }
+
+  /**
    * Sets the recommendation's sid_webform to given webform submission $sid.
    */
   public function submitted($sid) {
-    $time = REQUEST_TIME;
+    $this->submitted = REQUEST_TIME;
     $this->sid_webform = $sid;
-    $this->submitted = $time;
     if (TMI_DEBUG) {
       watchdog('tmi_recommendation', '$this->submitted: ' . json_encode($this));
     }
@@ -50,16 +60,11 @@ class RecommendationEntity extends Entity {
    * Loads the Recommendation webform submission.
    */
   public function get_submission($rendered = TRUE) {
-    if (!$this->sid_webform) {
+    if (!$this->sid) {
       return NULL;
     }
-    module_load_include('inc', 'webform', 'includes/webform.submissions');
-    $submission = webform_get_submission(TMI_RECOMMEND_FORM_NID, $this->sid_webform);
-    if ($rendered) {
-      $recommend_form = node_load(TMI_RECOMMEND_FORM_NID);
-      return webform_submission_render($recommend_form, $submission, NULL, 'html');
-    }
-    return $submission;
+    $nid = $this->nid_recommend_form;
+    return tmi_webform_get_submission_html($nid, $this->sid);
   }
   
   /**

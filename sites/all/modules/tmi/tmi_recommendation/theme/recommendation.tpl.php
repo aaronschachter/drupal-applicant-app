@@ -2,10 +2,10 @@
   <p><strong><?php print $recommendation->email; ?></strong></p>
   <p><?php print $recommendation->rid; ?></p>
   <p>Requested <?php print format_date($recommendation->created, 'short'); ?></p>
+  <a href="/<?php print $recommendation->form_url; ?>"><?php print $recommendation->form_url; ?></a>
 
-  <?php if ($recommendation->submitted): ?>
+  <?php if ($recommendation->sid): ?>
     <div style="background: #eee;padding:20px">
-      <p>Submitted <?php print format_date($recommendation->submitted, 'short'); ?></p>
       <?php print $recommendation->submission; ?>
     </div>
   <?php endif; ?>

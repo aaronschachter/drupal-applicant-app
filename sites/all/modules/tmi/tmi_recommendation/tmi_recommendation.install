@@ -57,14 +57,20 @@ function tmi_recommendation_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'submitted' => array(
-        'description' => 'The Unix timestamp when the Recommendation was submitted.',
+      'nid_recommend_form' => array(
+        'description' => 'The Node nid providing the Recommend Form.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
-      'sid_webform' => array(
-        'description' => 'The Webform submission of the Recommendation.',
+      'sid' => array(
+        'description' => 'The Recommend Form Webform submission.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'submitted' => array(
+        'description' => 'The Unix timestamp when Recommendation was submitted.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,

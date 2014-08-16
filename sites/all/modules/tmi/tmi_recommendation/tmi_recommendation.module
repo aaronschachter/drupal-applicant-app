@@ -121,6 +121,7 @@ function tmi_recommendation_request_form_submit($form, &$form_state) {
     'last_name' => $values['last_name'],
     // Hardcode as required for now.
     'required' => 1,
+    'nid_recommend_form' => TMI_RECOMMEND_FORM_NID,
   ));
   $recommendation->save();
   drupal_set_message(t("Recommendation request sent to %email.", array(
