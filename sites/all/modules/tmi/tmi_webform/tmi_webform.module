@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the tmi_webform feature.
+ */
+
+include_once 'tmi_webform.features.inc';
