@@ -37,8 +37,8 @@ function tmi_application_views_default_views() {
     'mail' => 'mail',
     'completed' => 'completed',
     'submitted' => 'submitted',
-    'created' => 'created',
-    'uid' => 'uid',
+    'reviewed' => 'reviewed',
+    'reviewer_rating' => 'reviewer_rating',
   );
   $handler->display->display_options['style_options']['default'] = 'completed';
   $handler->display->display_options['style_options']['info'] = array(
@@ -70,21 +70,26 @@ function tmi_application_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'created' => array(
+    'reviewed' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'uid' => array(
-      'sortable' => 0,
+    'reviewer_rating' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
   );
+  /* Header: Global: Result summary */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Displaying @start - @end of @total Applications';
   /* Relationship: Applications: Uid */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'tmi_application';
@@ -108,7 +113,7 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['mail']['table'] = 'users';
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
   $handler->display->display_options['fields']['mail']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['mail']['label'] = 'Email';
+  $handler->display->display_options['fields']['mail']['label'] = 'Applicant Email';
   $handler->display->display_options['fields']['mail']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['mail']['alter']['path'] = 'application/[aid]';
   $handler->display->display_options['fields']['mail']['link_to_user'] = '0';
@@ -130,6 +135,17 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['submitted']['alter']['path'] = 'application/[aid]';
   $handler->display->display_options['fields']['submitted']['date_format'] = 'short';
   $handler->display->display_options['fields']['submitted']['second_date_format'] = 'long';
+  /* Field: Applications: Date reviewed */
+  $handler->display->display_options['fields']['reviewed']['id'] = 'reviewed';
+  $handler->display->display_options['fields']['reviewed']['table'] = 'tmi_application';
+  $handler->display->display_options['fields']['reviewed']['field'] = 'reviewed';
+  $handler->display->display_options['fields']['reviewed']['label'] = 'Reviewed';
+  $handler->display->display_options['fields']['reviewed']['date_format'] = 'short';
+  $handler->display->display_options['fields']['reviewed']['second_date_format'] = 'long';
+  /* Field: Applications: Rating */
+  $handler->display->display_options['fields']['reviewer_rating']['id'] = 'reviewer_rating';
+  $handler->display->display_options['fields']['reviewer_rating']['table'] = 'tmi_application';
+  $handler->display->display_options['fields']['reviewer_rating']['field'] = 'reviewer_rating';
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
@@ -154,14 +170,31 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['filters']['mail']['relationship'] = 'uid';
   $handler->display->display_options['filters']['mail']['exposed'] = TRUE;
   $handler->display->display_options['filters']['mail']['expose']['operator_id'] = 'mail_op';
-  $handler->display->display_options['filters']['mail']['expose']['label'] = 'Email';
-  $handler->display->display_options['filters']['mail']['expose']['description'] = 'The Applicant email.';
+  $handler->display->display_options['filters']['mail']['expose']['label'] = 'Applicant Email';
   $handler->display->display_options['filters']['mail']['expose']['operator'] = 'mail_op';
   $handler->display->display_options['filters']['mail']['expose']['identifier'] = 'mail';
   $handler->display->display_options['filters']['mail']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
+    4 => 0,
+    5 => 0,
+  );
+  /* Filter criterion: Applications: Rating */
+  $handler->display->display_options['filters']['reviewer_rating']['id'] = 'reviewer_rating';
+  $handler->display->display_options['filters']['reviewer_rating']['table'] = 'tmi_application';
+  $handler->display->display_options['filters']['reviewer_rating']['field'] = 'reviewer_rating';
+  $handler->display->display_options['filters']['reviewer_rating']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['reviewer_rating']['expose']['operator_id'] = 'reviewer_rating_op';
+  $handler->display->display_options['filters']['reviewer_rating']['expose']['label'] = 'Rating';
+  $handler->display->display_options['filters']['reviewer_rating']['expose']['operator'] = 'reviewer_rating_op';
+  $handler->display->display_options['filters']['reviewer_rating']['expose']['identifier'] = 'reviewer_rating';
+  $handler->display->display_options['filters']['reviewer_rating']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
   );
 
   /* Display: Page */
