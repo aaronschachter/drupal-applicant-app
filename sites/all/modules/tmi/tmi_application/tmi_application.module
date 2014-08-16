@@ -242,7 +242,11 @@ function tmi_application_page() {
   }
   // If this user is a reviewer, redirect to the admin view.
   if (user_access('review applications')) {
-    return t("You have 3 applications assigned for review.");
+    $output = '<h2>' . t("Hi there, Reviewer!") . '</h2>';
+    $output .= '<p>' . t("You have !link assigned to you for review.", array(
+      '!link' => l('3 applications', 'node/' . TMI_SCHOLARSHIP_NID . '/applications'),
+    )) . '</p>';
+    return $output;
   }
 
   // Load the Application Form node.
