@@ -1,5 +1,5 @@
 name = TMI User
-description = User related functionality.
+description = Provides User fields and related functionality.
 core = 7.x
 package = TMI
 dependencies[] = admin_menu
