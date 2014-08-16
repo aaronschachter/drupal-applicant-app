@@ -57,6 +57,7 @@ function tmi_application_theme($existing, $type, $theme, $path) {
     ),
   );
 }
+
 /**
  * Menu autoloader for %application.
  */
@@ -113,15 +114,12 @@ function tmi_application_page() {
 function tmi_application_status_page() {
   $aid = tmi_application_get_application_aid();
   $application = entity_load_single('application', $aid);
-  $vars = $application->get_theme_vars();
   $admin = user_access('administer modules');
 
   return theme('application_status', array(
-    'account' => $vars['account'],
-    'application' => $vars['application'],
+    'application' => $application,
     'recommendations' => tmi_recommendation_get_recommendations_table($aid, $admin),
     'request_form' => drupal_get_form('tmi_recommendation_request_form', $aid),
-    'application_view' => theme('application', $vars),
   ));
 }
 
@@ -145,5 +143,5 @@ function tmi_application_webform_submission_insert($node, $submission) {
  * Page callback for the Application Review page.
  */
 function tmi_application_view_application_page($application) {
-  return theme('application', $application->get_theme_vars());
+  return $application->view();
 }

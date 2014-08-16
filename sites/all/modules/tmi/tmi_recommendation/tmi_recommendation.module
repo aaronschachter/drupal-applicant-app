@@ -25,6 +25,18 @@ function tmi_recommendation_entity_info() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function tmi_recommendation_theme($existing, $type, $theme, $path) {
+  return array(
+    'recommendation' => array(
+      'template' => 'recommendation',
+      'path' => drupal_get_path('module', 'tmi_recommendation') . '/theme',
+    ),
+  );
+}
+
+/**
  * Return all Recommendations for a given Application $aid.
  *
  * @param int $aid

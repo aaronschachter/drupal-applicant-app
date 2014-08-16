@@ -9,4 +9,4 @@
 <?php print render($request_form); ?>
 
 <hr />
-<?php print $application_view; ?>
+<?php print $application->view(); ?>

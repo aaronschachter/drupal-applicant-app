@@ -82,24 +82,30 @@ class ApplicationEntity extends Entity {
   }
 
   /**
-   * Returns array of variables to pass to the application theme function.
+   * Returns rendered entity HTML.
    */
-  public function get_theme_vars() {
+  public function view() {
     // Add themed webform submission.
     $this->submission = $this->get_submission();
+    $is_admin = FALSE;
+
     // @todo: Change to Review Application permission.
     if (user_access('administer modules')) {
+      $is_admin = TRUE;
+      // Add Recommendation views.
       $recommendations = $this->get_recommendations();
       foreach ($recommendations as $rec) {
         $recommendation = entity_load_single('recommendation', $rec->rid);
-        $this->recommendations[] = $recommendation->get_submission();
+        $this->recommendations[] = $recommendation->view();
       }
     }
-    return array(
-      // Get Applicant details.
+
+    return theme('application', array(
+      // Load Applicant details.
       'account' => user_load($this->uid),
       'application' => $this,
-    );
+      'is_admin' => $is_admin,
+    ));
   }
 
 }

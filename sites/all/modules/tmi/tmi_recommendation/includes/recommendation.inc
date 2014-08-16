@@ -50,13 +50,27 @@ class RecommendationEntity extends Entity {
    * Loads the Recommendation webform submission.
    */
   public function get_submission($rendered = TRUE) {
+    if (!$this->sid_webform) {
+      return NULL;
+    }
     module_load_include('inc', 'webform', 'includes/webform.submissions');
     $submission = webform_get_submission(TMI_RECOMMEND_FORM_NID, $this->sid_webform);
     if ($rendered) {
       $recommend_form = node_load(TMI_RECOMMEND_FORM_NID);
-      return webform_submission_render($recommend_form, $submission, NULL, 'display');
+      return webform_submission_render($recommend_form, $submission, NULL, 'html');
     }
     return $submission;
+  }
+  
+  /**
+   * Returns rendered entity HTML.
+   */
+  public function view() {
+    // Load the rendered webform submission.
+    $this->submission = $this->get_submission();
+    return theme('recommendation', array(
+      'recommendation' => $this,
+    ));
   }
 }
 
