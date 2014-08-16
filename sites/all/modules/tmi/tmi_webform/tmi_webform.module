@@ -5,3 +5,37 @@
  */
 
 include_once 'tmi_webform.features.inc';
+
+/**
+ * Returns rendered HTML of a Webform Submission.
+ *
+ * @param int $nid
+ *   The node $nid of a Webform-enabled node which created the submission.
+ * @param int $sid
+ *   The webform submission sid.
+ *
+ * @return string
+ *
+ */
+function tmi_webform_get_submission_html($nid, $sid) {
+  module_load_include('inc', 'webform', 'includes/webform.submissions');
+  $submission = webform_get_submission($nid, $sid);
+  $node = node_load($nid);
+  return webform_submission_render($node, $submission, NULL, 'html');
+}
+
+/**
+ * Implements hook_webform_submission_insert().
+ */
+function tmi_webform_webform_submission_insert($node, $submission) {
+  // If the submission is gnereated by the Application Form node:
+  if ($node->nid == TMI_APPLICATION_FORM_NID) {
+    // Get the uid of the user who submitted it.
+    $uid = $submission->uid;
+    // Get the User's Application aid.
+    $aid = tmi_application_get_application_aid($uid);
+    // Set the application as completed with the new $sid.
+    $application = entity_load_single('application', $aid);
+    $application->submitted($submission->sid);
+  }
+}

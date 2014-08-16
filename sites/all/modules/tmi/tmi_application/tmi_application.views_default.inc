@@ -91,18 +91,18 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid']['label'] = 'Applicant';
   $handler->display->display_options['relationships']['uid']['required'] = TRUE;
-  /* Relationship: Applications: Applying to Node nid */
-  $handler->display->display_options['relationships']['nid']['id'] = 'nid';
-  $handler->display->display_options['relationships']['nid']['table'] = 'tmi_application';
-  $handler->display->display_options['relationships']['nid']['field'] = 'nid';
-  $handler->display->display_options['relationships']['nid']['required'] = TRUE;
+  /* Relationship: Applications: Applying for Node nid */
+  $handler->display->display_options['relationships']['nid_apply_for']['id'] = 'nid_apply_for';
+  $handler->display->display_options['relationships']['nid_apply_for']['table'] = 'tmi_application';
+  $handler->display->display_options['relationships']['nid_apply_for']['field'] = 'nid_apply_for';
+  $handler->display->display_options['relationships']['nid_apply_for']['required'] = TRUE;
   /* Field: Applications: Application aid */
   $handler->display->display_options['fields']['aid']['id'] = 'aid';
   $handler->display->display_options['fields']['aid']['table'] = 'tmi_application';
   $handler->display->display_options['fields']['aid']['field'] = 'aid';
   $handler->display->display_options['fields']['aid']['label'] = 'Aid';
   $handler->display->display_options['fields']['aid']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['aid']['alter']['path'] = 'admin/applications/[aid]';
+  $handler->display->display_options['fields']['aid']['alter']['path'] = 'application/[aid]';
   /* Field: User: E-mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
@@ -110,7 +110,7 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['mail']['relationship'] = 'uid';
   $handler->display->display_options['fields']['mail']['label'] = 'Email';
   $handler->display->display_options['fields']['mail']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['mail']['alter']['path'] = 'admin/applications/[aid]';
+  $handler->display->display_options['fields']['mail']['alter']['path'] = 'application/[aid]';
   $handler->display->display_options['fields']['mail']['link_to_user'] = '0';
   /* Field: Applications: Date completed */
   $handler->display->display_options['fields']['completed']['id'] = 'completed';
@@ -118,7 +118,7 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['completed']['field'] = 'completed';
   $handler->display->display_options['fields']['completed']['label'] = 'Completed';
   $handler->display->display_options['fields']['completed']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['completed']['alter']['path'] = 'admin/applications/[aid]';
+  $handler->display->display_options['fields']['completed']['alter']['path'] = 'application/[aid]';
   $handler->display->display_options['fields']['completed']['date_format'] = 'short';
   $handler->display->display_options['fields']['completed']['second_date_format'] = 'long';
   /* Field: Applications: Date submitted */
@@ -127,21 +127,26 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['submitted']['field'] = 'submitted';
   $handler->display->display_options['fields']['submitted']['label'] = 'Submitted';
   $handler->display->display_options['fields']['submitted']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['submitted']['alter']['path'] = 'admin/applications/[aid]';
+  $handler->display->display_options['fields']['submitted']['alter']['path'] = 'application/[aid]';
   $handler->display->display_options['fields']['submitted']['date_format'] = 'short';
   $handler->display->display_options['fields']['submitted']['second_date_format'] = 'long';
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
-  $handler->display->display_options['arguments']['nid']['relationship'] = 'nid';
-  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['relationship'] = 'nid_apply_for';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'empty';
   $handler->display->display_options['arguments']['nid']['title_enable'] = TRUE;
-  $handler->display->display_options['arguments']['nid']['title'] = '%1 Applications';
+  $handler->display->display_options['arguments']['nid']['title'] = 'Applications: %1';
   $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
+    'scholarship' => 'scholarship',
+  );
   /* Filter criterion: User: E-mail */
   $handler->display->display_options['filters']['mail']['id'] = 'mail';
   $handler->display->display_options['filters']['mail']['table'] = 'users';
@@ -162,11 +167,9 @@ function tmi_application_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['path'] = 'node/%/applications';
-  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Applications';
-  $handler->display->display_options['menu']['description'] = 'List of all applications.';
   $handler->display->display_options['menu']['weight'] = '100';
-  $handler->display->display_options['menu']['name'] = 'management';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
   $export['applications'] = $view;

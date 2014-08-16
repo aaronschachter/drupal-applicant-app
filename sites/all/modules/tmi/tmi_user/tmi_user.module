@@ -11,7 +11,8 @@ function tmi_user_user_insert(&$edit, $account, $category) {
   // Create an Application entity for the active Scholarship for this applicant.
   $application = entity_create('application', array(
     'uid' => $account->uid,
-    'nid_scholarship' => TMI_SCHOLARSHIP_NID,
+    'nid_apply_for' => TMI_SCHOLARSHIP_NID,
+    'nid_application_form' => TMI_APPLICATION_FORM_NID,
     'submitted' => NULL,
     'completed' => NULL,
   ));

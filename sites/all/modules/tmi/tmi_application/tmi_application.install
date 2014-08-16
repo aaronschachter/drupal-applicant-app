@@ -24,14 +24,20 @@ function tmi_application_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'nid' => array(
-        'description' => 'The Node nid to Applicant is applying to.',
+      'nid_apply_for' => array(
+        'description' => 'The Node nid to Applicant is applying for.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
-      'sid_application_form' => array(
-        'description' => 'The Application Form webform submission.',
+      'nid_application_form' => array(
+        'description' => 'The Node nid providing the Application Form',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'sid' => array(
+        'description' => 'The Application Form Webform submission',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
@@ -62,7 +68,7 @@ function tmi_application_schema() {
         'description' => 'The Application Review score.',
         'type' => 'int',
       ),
-      'review_uid' => array(
+      'reviewer_uid' => array(
         'description' => 'The Application Reviewer User uid.',
         'type' => 'int',
       ),

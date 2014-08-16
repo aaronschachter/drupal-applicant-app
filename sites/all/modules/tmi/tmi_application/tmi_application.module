@@ -38,10 +38,10 @@ function tmi_application_menu() {
     'page callback' => 'tmi_application_page',
     'access arguments' => array('access content'),
   );
-  $items['admin/applications/%application'] = array(
+  $items['application/%application'] = array(
     'title' => 'Application',
     'page callback' => 'tmi_application_view_application_page',
-    'page arguments' => array(2),
+    'page arguments' => array(1),
     'access callback' => 'user_access',
     'access arguments' => array('review applications'),
   );
@@ -74,6 +74,17 @@ function tmi_application_theme($existing, $type, $theme, $path) {
       'path' => drupal_get_path('module', 'tmi_application') . '/theme',
     ),
   );
+}
+
+/**
+ * Implements hook_admin_paths().
+ */
+function tmi_application_admin_paths() {
+  $paths = array(
+    'application/*' => TRUE,
+    'node/*/applications' => TRUE,
+  );
+  return $paths;
 }
 
 /**
@@ -118,9 +129,9 @@ function tmi_application_views_data() {
       'label' => t('Application aid'),
     ),
   );
-  $data['tmi_application']['nid'] = array(
-    'title' => t('Applying to Node nid'),
-    'help' => t('The node the Applicant is applying to.'),
+  $data['tmi_application']['nid_apply_for'] = array(
+    'title' => t('Applying for Node nid'),
+    'help' => t('The node the Applicant is applying for.'),
     'field' => array(
       'handler' => 'views_handler_field_numeric',
       'click sortable' => TRUE,
@@ -134,7 +145,7 @@ function tmi_application_views_data() {
     'relationship' => array(
       'base' => 'node',
       'handler' => 'views_handler_relationship',
-      'label' => t('Applying to'),
+      'label' => t('Applying for'),
     ),
   );
   $data['tmi_application']['uid'] = array(
@@ -231,12 +242,12 @@ function tmi_application_page() {
   }
   // If this user is a reviewer, redirect to the admin view.
   if (user_access('review applications')) {
-    drupal_goto('admin/applications');
+    return t("You have 3 applications assigned for review.");
   }
 
-  // Load the Scholarship webform node.
-  $node = node_load(TMI_SCHOLARSHIP_NID);
-  // Load its webform, which is the Scholarship application.
+  // Load the Application Form node.
+  $node = node_load(TMI_APPLICATION_FORM_NID);
+  // And its webform.
   webform_node_view($node, 'full');
   $content = isset($node->content['webform']) ? $node->content['webform'] : array();
   // If a webform exists:
@@ -263,22 +274,6 @@ function tmi_application_status_page() {
     'recommendations' => tmi_recommendation_get_recommendations_table($aid, $admin),
     'request_form' => drupal_get_form('tmi_recommendation_request_form', $aid),
   ));
-}
-
-/**
- * Implements hook_webform_submission_insert().
- */
-function tmi_application_webform_submission_insert($node, $submission) {
-  // If this was the Scholarship application:
-  if ($node->nid == TMI_SCHOLARSHIP_NID) {
-    // Get the uid of the user who submitted it.
-    $uid = $submission->uid;
-    // Get the User's Application aid.
-    $aid = tmi_application_get_application_aid($uid);
-    // Set the application as completed with the new $sid.
-    $application = entity_load_single('application', $aid);
-    $application->submitted($submission->sid);
-  }
 }
 
 /**

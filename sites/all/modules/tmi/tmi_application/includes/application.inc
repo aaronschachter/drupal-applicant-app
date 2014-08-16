@@ -34,10 +34,10 @@ class ApplicationEntity extends Entity {
   }
 
   /**
-   * Sets the application's sid_webform to given webform submission $sid.
+   * Sets the application's sid to given webform submission $sid.
    */
   public function submitted($sid) {
-    $this->sid_webform = $sid;
+    $this->sid = $sid;
     $this->submitted = REQUEST_TIME;
    if (TMI_DEBUG) {
       watchdog('tmi_application', '$this->submitted: ' . json_encode($this));
@@ -63,14 +63,9 @@ class ApplicationEntity extends Entity {
   /**
    * Loads the Application Scholarship webform submission.
    */
-  public function get_submission($rendered = TRUE) {
-    module_load_include('inc', 'webform', 'includes/webform.submissions');
-    $submission = webform_get_submission($this->nid_scholarship, $this->sid_webform);
-    if ($rendered) {
-      $scholarship = node_load($this->nid_scholarship);
-      return webform_submission_render($scholarship, $submission, NULL, 'html');
-    }
-    return $submission;
+  public function get_submission() {
+    $nid = $this->nid_application_form;
+    return tmi_webform_get_submission_html($nid, $this->sid);
   }
 
   public function get_recommendations() {

@@ -5,3 +5,7 @@
  */
 
 include_once 'tmi_application_form.features.inc';
+
+// hardcode for now.
+// This should be computed from what the active "Apply for" node is set to.
+define('TMI_APPLICATION_FORM_NID', 5);
