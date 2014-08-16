@@ -1,6 +1,6 @@
-name = tmi_recommend_form
+name = TMI Recommendation Form
 core = 7.x
-package = Features
+package = TMI
 dependencies[] = features
 dependencies[] = node
 dependencies[] = text

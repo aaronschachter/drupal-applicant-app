@@ -1,6 +1,6 @@
-name = tmi_application_form
+name = TMI Application Form
 core = 7.x
-package = Features
+package = TMI
 dependencies[] = features
 dependencies[] = node
 dependencies[] = text

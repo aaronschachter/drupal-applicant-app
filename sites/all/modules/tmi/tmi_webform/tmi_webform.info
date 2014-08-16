@@ -1,6 +1,6 @@
-name = tmi_webform
+name = TMI Webform
 core = 7.x
-package = Features
+package = TMI
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = node

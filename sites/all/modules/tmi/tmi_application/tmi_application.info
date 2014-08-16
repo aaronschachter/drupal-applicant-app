@@ -1,4 +1,4 @@
-name = tmi_application
+name = TMI Application
 description = Provides Application entity and functionality.
 core = 7.x
 package = TMI

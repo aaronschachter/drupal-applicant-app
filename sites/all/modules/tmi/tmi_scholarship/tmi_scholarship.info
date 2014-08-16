@@ -1,6 +1,6 @@
-name = tmi_scholarship
+name = TMI Scholarship
 core = 7.x
-package = Features
+package = TMI
 dependencies[] = date
 dependencies[] = entityreference
 dependencies[] = features
