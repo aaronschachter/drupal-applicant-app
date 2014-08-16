@@ -101,7 +101,7 @@ class RecommendationEntityController extends EntityAPIController {
     parent::save($entity, $transaction);
     if ($op == 'insert') {
       // @todo: Send email with link to form_url to the Recommender.
-      $form_url = $this->get_form_url();
+      $form_url = $entity->get_form_url();
       if (TMI_DEBUG) {
         watchdog('tmi_recommendation', 'form_url: ' . $form_url);
       }
