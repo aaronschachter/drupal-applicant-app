@@ -34,19 +34,19 @@ class ApplicationEntity extends Entity {
   }
 
   /**
-   * Sets the application's sid to given webform submission $sid.
+   * Sets the Application sid property to given webform submission $sid.
    */
   public function submitted($sid) {
     $this->sid = $sid;
     $this->submitted = REQUEST_TIME;
-   if (TMI_DEBUG) {
+    if (TMI_DEBUG) {
       watchdog('tmi_application', '$this->submitted: ' . json_encode($this));
     }
     $this->save();
   }
 
   /**
-   * Sets the application's completed timestamp.
+   * Sets the Application's completed timestamp.
    */
   public function completed($time = NULL) {
     if (!$time) {
@@ -58,6 +58,21 @@ class ApplicationEntity extends Entity {
     }
     $this->save();
     // @todo: Send email to Applicant informing them Application is completed.
+  }
+
+  /**
+   * Sets the Application's Review properties.
+   */
+  public function reviewed($values) {
+    global $user;
+    $this->reviewed = REQUEST_TIME;
+    $this->reviewer_uid = $user->uid;
+    $this->reviewer_rating = $values['reviewer_rating'];
+    $this->reviewer_notes = $values['reviewer_notes'];
+    if (TMI_DEBUG) {
+      watchdog('tmi_application', '$this->submitted: ' . json_encode($this));
+    }
+    $this->save();
   }
 
   /**

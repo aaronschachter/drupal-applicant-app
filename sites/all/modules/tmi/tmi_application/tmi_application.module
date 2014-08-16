@@ -321,6 +321,21 @@ function tmi_application_review_form($form, &$form_state, $application) {
   return $form;
 }
 
+/**
+ * Submit callback for tmi_application_review_form().
+ */
+function tmi_application_review_form_submit($form, &$form_state) {
+  // If user session no longer exists:
+  if (!user_is_logged_in()) {
+    // Tell them that.
+    drupal_set_message(t("You are no longer logged in. Please log in."), 'error');
+  }
+  $values = $form_state['values'];
+  $application = application_load($values['aid']);
+  $application->reviewed($values);
+  drupal_set_message(t("Review saved."));
+}
+
 function tmi_application_get_review_rating_options() {
   return array(
     'yes' => t("Yes"),
