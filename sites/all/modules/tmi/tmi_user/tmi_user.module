@@ -4,7 +4,11 @@
  * Implements hook_user_user_insert().
  */
 function tmi_user_user_insert(&$edit, $account, $category) {
-  // Create an Application entity for the active Scholarship for this user.
+  // If this user has access to review applications, they are not an applicant.
+  if (user_access('review applications')) {
+    return;
+  }
+  // Create an Application entity for the active Scholarship for this applicant.
   $application = entity_create('application', array(
     'uid' => $account->uid,
     'nid_scholarship' => TMI_SCHOLARSHIP_NID,
