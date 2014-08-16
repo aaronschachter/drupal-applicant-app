@@ -1,21 +1,13 @@
 <div>
-
-  <p><strong>Email: <?php print $account->mail; ?></strong></p>
-
-  <p>Status: <?php print ucfirst($application->status); ?></p>
-
-  <p>Created: <?php print format_date($application->created, 'short'); ?></p>
-
+  <p><strong><?php print $account->mail; ?></strong></p>
+  <p>Application <?php print $application->status; ?>.</p>
+  <p>Created <?php print format_date($application->created, 'short'); ?></p>
   <?php if ($application->submitted): ?>
-    <p>Submitted: <?php print format_date($application->submitted, 'short'); ?></p>
+    <div style="background: #eee;padding:20px">
+      <p>Submitted <?php print format_date($application->submitted, 'short'); ?></p>
+      <?php print $application->submission; ?>
+    </div>
   <?php endif; ?>
-
-  <?php if ($application->completed): ?>
-    <p>Completed: <?php print format_date($application->completed, 'short'); ?></p>
-  <?php endif; ?>
-
-  <?php print $application->submission; ?>
-
 </div>
 
 <?php if ($is_admin): ?>
