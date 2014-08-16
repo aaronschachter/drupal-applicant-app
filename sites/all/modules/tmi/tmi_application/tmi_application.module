@@ -229,6 +229,10 @@ function tmi_application_page() {
   if (!user_is_logged_in()) {
     return t("Please login.");
   }
+  // If this user is a reviewer, redirect to the admin view.
+  if (user_access('review applications')) {
+    drupal_goto('admin/applications');
+  }
 
   // Load the Scholarship webform node.
   $node = node_load(TMI_SCHOLARSHIP_NID);
