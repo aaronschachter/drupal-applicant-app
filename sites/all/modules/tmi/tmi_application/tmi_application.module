@@ -36,11 +36,23 @@ function tmi_application_menu() {
     'title' => 'Application',
     'page callback' => 'tmi_application_view_application_page',
     'page arguments' => array(1),
-    'access callback' => 'tmi_application_review_page_access'
+    'access callback' => 'user_access',
+    'access arguments' => array('review applications'),
   );
   return $items;
 }
 
+/**
+ * Implements hook_permission().
+ */
+function tmi_application_permission() {
+  return array(
+    'review applications' => array(
+      'title' => t('Review applications'),
+      'description' => t('View and review any Scholarship Application.'),
+    ),
+  );
+}
 
 /**
  * Implements hook_theme().
@@ -66,13 +78,6 @@ function application_load($aid) {
 }
 
 /**
- * Access callback for Application Review page.
- */
-function tmi_application_review_page_access() {
-  return user_access('administer modules');
-}
-
-/**
  * Retrieve the Application aid for the current user.
  */
 function tmi_application_get_application_aid($uid = NULL) {
@@ -87,6 +92,9 @@ function tmi_application_get_application_aid($uid = NULL) {
     ->fetchField();
 }
 
+/**
+ * Page callback for Application form / status page.
+ */
 function tmi_application_page() {
   if (!user_is_logged_in()) {
     return t("Please login.");
