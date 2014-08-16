@@ -68,7 +68,7 @@ class ApplicationEntity extends Entity {
     $submission = webform_get_submission($this->nid_scholarship, $this->sid_webform);
     if ($rendered) {
       $scholarship = node_load($this->nid_scholarship);
-      return webform_submission_render($scholarship, $submission, NULL, 'display');
+      return webform_submission_render($scholarship, $submission, NULL, 'html');
     }
     return $submission;
   }
