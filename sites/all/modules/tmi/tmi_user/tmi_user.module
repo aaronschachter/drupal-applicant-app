@@ -4,6 +4,11 @@
  * Implements hook_user_user_insert().
  */
 function tmi_user_user_insert(&$edit, $account, $category) {
+  // Sanity check.
+  if (!module_exists('tmi_application')) {
+    return;
+  }
+
   // If this user has access to review applications, they are not an applicant.
   if (user_access('review applications')) {
     return;

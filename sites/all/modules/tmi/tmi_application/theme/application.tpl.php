@@ -17,16 +17,20 @@
 
 <?php if ($is_admin): ?>
 
-  <h2>Recommendations</h2>
-  <?php if (isset($application->recommendations)): ?>
-    <?php foreach ($application->recommendations as $rec): ?>
-      <div><?php print $rec; ?></div>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <p>No recommendations have been requested.</p>
+  <?php if ($application->submitted): ?>
+    <h2>Recommendations</h2>
+    <?php if (isset($application->recommendations)): ?>
+      <?php foreach ($application->recommendations as $rec): ?>
+        <div><?php print $rec; ?></div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p>No recommendations have been requested.</p>
+    <?php endif; ?>
   <?php endif; ?>
 
-  <h2>Review</h2>
-  <?php // print render($review_form); ?>
+  <?php if ($application->completed): ?>
+    <h2>Review</h2>
+    <?php // print render($review_form); ?>
+  <?php endif; ?>
 
 <?php endif; ?>
