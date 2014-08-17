@@ -121,20 +121,15 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['completed']['id'] = 'completed';
   $handler->display->display_options['fields']['completed']['table'] = 'tmi_application';
   $handler->display->display_options['fields']['completed']['field'] = 'completed';
-  $handler->display->display_options['fields']['completed']['label'] = 'Completed';
+  $handler->display->display_options['fields']['completed']['label'] = 'Application Completed';
   $handler->display->display_options['fields']['completed']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['completed']['alter']['path'] = 'application/[aid]';
   $handler->display->display_options['fields']['completed']['date_format'] = 'short';
   $handler->display->display_options['fields']['completed']['second_date_format'] = 'long';
-  /* Field: Applications: Date submitted */
-  $handler->display->display_options['fields']['submitted']['id'] = 'submitted';
-  $handler->display->display_options['fields']['submitted']['table'] = 'tmi_application';
-  $handler->display->display_options['fields']['submitted']['field'] = 'submitted';
-  $handler->display->display_options['fields']['submitted']['label'] = 'Submitted';
-  $handler->display->display_options['fields']['submitted']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['submitted']['alter']['path'] = 'application/[aid]';
-  $handler->display->display_options['fields']['submitted']['date_format'] = 'short';
-  $handler->display->display_options['fields']['submitted']['second_date_format'] = 'long';
+  /* Field: Applications: Rating */
+  $handler->display->display_options['fields']['reviewer_rating']['id'] = 'reviewer_rating';
+  $handler->display->display_options['fields']['reviewer_rating']['table'] = 'tmi_application';
+  $handler->display->display_options['fields']['reviewer_rating']['field'] = 'reviewer_rating';
   /* Field: Applications: Date reviewed */
   $handler->display->display_options['fields']['reviewed']['id'] = 'reviewed';
   $handler->display->display_options['fields']['reviewed']['table'] = 'tmi_application';
@@ -142,10 +137,21 @@ function tmi_application_views_default_views() {
   $handler->display->display_options['fields']['reviewed']['label'] = 'Reviewed';
   $handler->display->display_options['fields']['reviewed']['date_format'] = 'short';
   $handler->display->display_options['fields']['reviewed']['second_date_format'] = 'long';
-  /* Field: Applications: Rating */
-  $handler->display->display_options['fields']['reviewer_rating']['id'] = 'reviewer_rating';
-  $handler->display->display_options['fields']['reviewer_rating']['table'] = 'tmi_application';
-  $handler->display->display_options['fields']['reviewer_rating']['field'] = 'reviewer_rating';
+  /* Field: Applications: Reviewer uid */
+  $handler->display->display_options['fields']['reviewer_uid']['id'] = 'reviewer_uid';
+  $handler->display->display_options['fields']['reviewer_uid']['table'] = 'tmi_application';
+  $handler->display->display_options['fields']['reviewer_uid']['field'] = 'reviewer_uid';
+  $handler->display->display_options['fields']['reviewer_uid']['label'] = 'Reviewer';
+  $handler->display->display_options['fields']['reviewer_uid']['separator'] = '';
+  /* Field: Applications: Date submitted */
+  $handler->display->display_options['fields']['submitted']['id'] = 'submitted';
+  $handler->display->display_options['fields']['submitted']['table'] = 'tmi_application';
+  $handler->display->display_options['fields']['submitted']['field'] = 'submitted';
+  $handler->display->display_options['fields']['submitted']['label'] = 'Applicant Submitted';
+  $handler->display->display_options['fields']['submitted']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['submitted']['alter']['path'] = 'application/[aid]';
+  $handler->display->display_options['fields']['submitted']['date_format'] = 'short';
+  $handler->display->display_options['fields']['submitted']['second_date_format'] = 'long';
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';

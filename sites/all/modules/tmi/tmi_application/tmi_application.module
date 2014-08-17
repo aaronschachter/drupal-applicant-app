@@ -240,6 +240,25 @@ function tmi_application_views_data() {
       'handler' => 'views_handler_argument_string',
     ),
   );
+  $data['tmi_application']['reviewer_uid'] = array(
+    'title' => t('Reviewer uid'),
+    'help' => t('Reviewer User uid.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'relationship' => array(
+      'base' => 'users',
+      'handler' => 'views_handler_relationship',
+      'label' => t('Reviewer User'),
+    ),
+  );
   return $data;
 }
 /**
