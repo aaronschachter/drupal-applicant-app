@@ -140,7 +140,7 @@ function tmi_recommendation_get_recommendations_table($aid) {
       $rec->first_name . ' ' . $rec->last_name,
       $rec->email,
       format_date($rec->created, 'short'),
-      $rec->submitted ? format_date($rec->submitted, 'short') : '',
+      $rec->submitted ? format_date($rec->submitted, 'short') : l('Re-send request', '#'),
     );
   }
   return theme('table', array('header' => $header, 'rows' => $rows));
