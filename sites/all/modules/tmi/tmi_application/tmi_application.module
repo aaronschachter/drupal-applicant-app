@@ -5,10 +5,6 @@
  */
 
 include_once 'tmi_application.features.inc';
-/**
- * @file
- * Code for the tmi_scholarship_application module.
- */
 
 /**
  * Implements hook_entity_info().
@@ -300,8 +296,11 @@ function tmi_application_page() {
     return $output;
   }
 
+  $aid = tmi_application_get_application_aid();
+  $application = application_load($aid);
+
   // Load the Application Form node.
-  $node = node_load(TMI_APPLICATION_FORM_NID);
+  $node = node_load($application->nid_application_form);
   // And its webform.
   webform_node_view($node, 'full');
   $content = isset($node->content['webform']) ? $node->content['webform'] : array();
@@ -312,17 +311,15 @@ function tmi_application_page() {
   }
 
   // If we've made it this far, the webform has been submitted.
-  return tmi_application_status_page();
+  return tmi_application_status_page($application);
 
 }
 
 /**
  * Returns HTML for the Application status page.
  */
-function tmi_application_status_page() {
-  $aid = tmi_application_get_application_aid();
-  $application = entity_load_single('application', $aid);
-
+function tmi_application_status_page($application) {
+  $aid = $application->aid;
   return theme('application_status', array(
     'application' => $application,
     'recommendations' => tmi_recommendation_get_recommendations_table($aid),
@@ -336,7 +333,6 @@ function tmi_application_status_page() {
 function tmi_application_view_application_page($application) {
   return $application->view();
 }
-
 
 /**
  * Form constructor for a Application review.
@@ -387,11 +383,13 @@ function tmi_application_review_form_submit($form, &$form_state) {
   drupal_set_message(t("Review saved."));
 }
 
+/**
+ * Options callback for Review Form.
+ */
 function tmi_application_get_review_rating_options() {
   return array(
     'yes' => t("Yes"),
     'no' => t("No"),
     'maybe' => t("Maybe"),
   );
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+define ('TMI_DEBUG', variable_get('tmi_debug'));
+
 /**
  * Implements hook_menu().
  */
