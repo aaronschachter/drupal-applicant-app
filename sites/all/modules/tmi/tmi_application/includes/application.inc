@@ -53,6 +53,7 @@ class ApplicationEntity extends Entity {
       $time = REQUEST_TIME;
     }
     $this->completed = $time;
+    $this->reviewer_rating = 'needs_review';
     if (TMI_DEBUG) {
       watchdog('tmi_application', '$this->completed: ' . json_encode($this));
     }
