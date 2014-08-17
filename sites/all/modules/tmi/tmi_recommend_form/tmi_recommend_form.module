@@ -6,9 +6,6 @@
 
 include_once 'tmi_recommend_form.features.inc';
 
-// hardcode for now.
-define('TMI_RECOMMEND_FORM_NID', 4);
-
 /**
  * Implements hook_node_view().
  */
@@ -28,7 +25,7 @@ function tmi_recommend_form_node_view($node, $view_mode, $langcode) {
     // If a submission exists:
     if ($recommendation && $recommendation->sid) {
       // This URL is no longer valid.
-      $error_msg = t("This Recommendation form has already been submitted.");
+      $error_msg = t("Thank you for your Recommendation.");
     }
     // Else if doesn't exist:
     else {

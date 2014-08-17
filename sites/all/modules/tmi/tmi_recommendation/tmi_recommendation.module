@@ -57,11 +57,24 @@ function tmi_recommendation_get_recommendations($aid) {
  *
  * @param int $aid
  *   The Application aid.
+ * @param int $nid_recommend_form
+ *   The node nid of the Recommendation Form to send to the Recommender.
  */
-function tmi_recommendation_request_form($form, &$form_state, $aid) {
+function tmi_recommendation_request_form($form, &$form_state, $aid, $nid_recommend_form) {
   $form['aid'] = array(
     '#type' => 'hidden',
     '#default_value' => $aid,
+    '#access' => FALSE,
+  );
+  $form['required'] = array(
+    '#type' => 'hidden',
+    // Hardcoded for now.
+    '#default_value' => 1,
+    '#access' => FALSE,
+  );
+  $form['nid_recommend_form'] = array(
+    '#type' => 'hidden',
+    '#default_value' => $nid_recommend_form,
     '#access' => FALSE,
   );
   $form['email'] = array(
@@ -107,9 +120,8 @@ function tmi_recommendation_request_form_submit($form, &$form_state) {
     'email' => $values['email'],
     'first_name' => $values['first_name'],
     'last_name' => $values['last_name'],
-    // Hardcode as required for now.
-    'required' => 1,
-    'nid_recommend_form' => TMI_RECOMMEND_FORM_NID,
+    'required' => $values['required'],
+    'nid_recommend_form' => $values['nid_recommend_form'],
   ));
   $recommendation->save();
   drupal_set_message(t("Recommendation request sent to %email.", array(

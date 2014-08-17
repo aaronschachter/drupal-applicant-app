@@ -316,14 +316,19 @@ function tmi_application_page() {
 }
 
 /**
- * Returns HTML for the Application status page.
+ * Returns HTML for the Applicant's Application status page.
  */
 function tmi_application_status_page($application) {
   $aid = $application->aid;
+  // Load the node the Applicant is applying for.
+  $node = node_load($application->nid_apply_for);
+  // Get the Recommend Form nid to use for requesting Recommendations.
+  $nid_form = $node->field_recommend_form_required[LANGUAGE_NONE][0]['target_id'];
+
   return theme('application_status', array(
     'application' => $application,
     'recommendations' => tmi_recommendation_get_recommendations_table($aid),
-    'request_form' => drupal_get_form('tmi_recommendation_request_form', $aid),
+    'request_form' => drupal_get_form('tmi_recommendation_request_form', $aid, $nid_form),
   ));
 }
 

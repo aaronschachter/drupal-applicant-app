@@ -65,11 +65,15 @@ class RecommendationEntity extends Entity {
     $nid = $this->nid_recommend_form;
     return tmi_webform_get_submission_html($nid, $this->sid);
   }
-  
+
+  /**
+   * Returns the unique URL to access this Recommendation's Recommend Form.
+   */
   public function get_form_url() {
     $recommend_form_path = 'node/' . $this->nid_recommend_form;
     return $recommend_form_path . '?rid=' . $this->rid;
   }
+
   /**
    * Returns rendered entity HTML.
    */
