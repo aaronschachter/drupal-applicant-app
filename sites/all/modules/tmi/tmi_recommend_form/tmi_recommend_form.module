@@ -16,21 +16,34 @@ function tmi_recommend_form_node_view($node, $view_mode, $langcode) {
   if ($node->type != 'recommend_form') {
     return;
   }
+  // Initialize as FALSE.
+  $valid_url = FALSE;
+  $error_msg =  t("Invalid URL.  Please check the email sent.");
 
   // Make sure an Recommendation rid has been passed into the URL.
   if (isset($_GET['rid'])) {
     // @todo: Decrypt passed value.
-    $rid = $_GET['rid'];
-    // @todo: Check if the Recommendation has been submitted.  If so, no form.
+    $rid = (int) $_GET['rid'];
+    $recommendation = entity_load_single('recommendation', $rid);
+    // If a submission exists:
+    if ($recommendation && $recommendation->sid) {
+      // This URL is no longer valid.
+      $error_msg = t("This Recommendation form has already been submitted.");
+    }
+    // Else if doesn't exist:
+    else {
+      // This is a valid URL.
+      return;
+    }
   }
 
-  // Else if no 'rid' found in the query string:
-  else {
+  // If the current URL is not valid:
+  if (!$valid_url) {
     // Remove all content.
     unset($node->content);
     // Display error message.
     $node->content['error'] = array(
-      '#markup' => t("Invalid URL.  Please check the email sent."),
+      '#markup' => $error_msg,
     );
   }
 }
