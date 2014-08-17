@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * Implements hook_menu().
+ */
+function tmi_user_menu() {
+  $items['admin/config/tmi'] = array(
+    'title' => 'TMI Configuration',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tmi_user_admin_config_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer modules'),
+    'file' => 'tmi_user.admin.inc',
+  );
+  return $items;
+}
+
+/**
  * Implements hook_user_user_insert().
  */
 function tmi_user_user_insert(&$edit, $account, $category) {
@@ -8,16 +23,28 @@ function tmi_user_user_insert(&$edit, $account, $category) {
   if (!module_exists('tmi_application')) {
     return;
   }
-
   // If this user has access to review applications, they are not an applicant.
   if (user_access('review applications')) {
     return;
   }
+
+  // Load the active node that new users are applying for.
+  $apply_for = variable_get('tmi_user_insert_apply_for');
+  // If not set:
+  if (!$apply_for) {
+    // Exit out of function.
+    return;
+  }
+  $nid_apply_for = $apply_for['entity_id'];
+  $node = node_load($nid_apply_for);
+  // Get the Application Form nid.
+  $nid_form = $node->field_application_form[LANGUAGE_NONE][0]['target_id'];
+
   // Create an Application entity for the active Scholarship for this applicant.
   $application = entity_create('application', array(
     'uid' => $account->uid,
-    'nid_apply_for' => TMI_SCHOLARSHIP_NID,
-    'nid_application_form' => TMI_APPLICATION_FORM_NID,
+    'nid_apply_for' => $nid_apply_for,
+    'nid_application_form' => $nid_form,
     'submitted' => NULL,
     'completed' => NULL,
     'reviewed' => NULL,

@@ -261,6 +261,7 @@ function tmi_application_views_data() {
   );
   return $data;
 }
+
 /**
  * Menu autoloader for %application.
  */
